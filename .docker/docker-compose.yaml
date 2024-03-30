@@ -3,11 +3,8 @@ services:
   xmos-dev:
     image: masonjacob/xmos-dev:latest
     # image: ghcr.io/xmos/xcore_builder:v3
-<<<<<<< Updated upstream
     # entrypoint: ./entrypoint.sh
-=======
     #entrypoint: /home/container/.docker/entrypoint.sh
->>>>>>> Stashed changes
     command: "sleep inf"
     volumes:
       - ./../:/home/container

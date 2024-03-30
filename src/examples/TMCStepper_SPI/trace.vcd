@@ -1,0 +1,1186 @@
+$date
+  Sat Mar 30 23:15:34 2024
+$end
+
+$version
+  Xcore C-Simulator + VcdTrace plugin (interface version: 1.9)
+$end
+
+$timescale
+  1666 ps
+$end
+
+$comment
+<?xml version="1.0" encoding="UTF-8"?>
+<Structure>
+    <Date value="Sat Mar 30 23:15:34 2024"/>
+    <Hierarchy>
+        <Core name="tile[0]">
+            <Category name="Ports">
+                <Group name="XS1_PORT_32A">
+                    <Signal name="tile[0]_XS1_PORT_32A" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_32A_inuse" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_32A_tWaiting" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_32A_direction" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_32A_outputThreadPc" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_32A_portDetails" radix="HEX"/>
+                </Group>
+                <Group name="XS1_PORT_16A">
+                    <Signal name="tile[0]_XS1_PORT_16A" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_16A_inuse" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_16A_tWaiting" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_16A_direction" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_16A_outputThreadPc" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_16A_portDetails" radix="HEX"/>
+                </Group>
+                <Group name="XS1_PORT_16B">
+                    <Signal name="tile[0]_XS1_PORT_16B" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_16B_inuse" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_16B_tWaiting" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_16B_direction" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_16B_outputThreadPc" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_16B_portDetails" radix="HEX"/>
+                </Group>
+                <Group name="XS1_PORT_8A">
+                    <Signal name="tile[0]_XS1_PORT_8A" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_8A_inuse" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_8A_tWaiting" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_8A_direction" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_8A_outputThreadPc" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_8A_portDetails" radix="HEX"/>
+                </Group>
+                <Group name="XS1_PORT_8B">
+                    <Signal name="tile[0]_XS1_PORT_8B" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_8B_inuse" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_8B_tWaiting" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_8B_direction" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_8B_outputThreadPc" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_8B_portDetails" radix="HEX"/>
+                </Group>
+                <Group name="XS1_PORT_8C">
+                    <Signal name="tile[0]_XS1_PORT_8C" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_8C_inuse" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_8C_tWaiting" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_8C_direction" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_8C_outputThreadPc" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_8C_portDetails" radix="HEX"/>
+                </Group>
+                <Group name="XS1_PORT_8D">
+                    <Signal name="tile[0]_XS1_PORT_8D" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_8D_inuse" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_8D_tWaiting" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_8D_direction" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_8D_outputThreadPc" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_8D_portDetails" radix="HEX"/>
+                </Group>
+                <Group name="XS1_PORT_4A">
+                    <Signal name="tile[0]_XS1_PORT_4A" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_4A_inuse" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_4A_tWaiting" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_4A_direction" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_4A_outputThreadPc" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_4A_portDetails" radix="HEX"/>
+                </Group>
+                <Group name="XS1_PORT_4B">
+                    <Signal name="tile[0]_XS1_PORT_4B" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_4B_inuse" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_4B_tWaiting" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_4B_direction" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_4B_outputThreadPc" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_4B_portDetails" radix="HEX"/>
+                </Group>
+                <Group name="XS1_PORT_4C">
+                    <Signal name="tile[0]_XS1_PORT_4C" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_4C_inuse" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_4C_tWaiting" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_4C_direction" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_4C_outputThreadPc" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_4C_portDetails" radix="HEX"/>
+                </Group>
+                <Group name="XS1_PORT_4D">
+                    <Signal name="tile[0]_XS1_PORT_4D" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_4D_inuse" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_4D_tWaiting" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_4D_direction" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_4D_outputThreadPc" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_4D_portDetails" radix="HEX"/>
+                </Group>
+                <Group name="XS1_PORT_4E">
+                    <Signal name="tile[0]_XS1_PORT_4E" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_4E_inuse" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_4E_tWaiting" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_4E_direction" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_4E_outputThreadPc" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_4E_portDetails" radix="HEX"/>
+                </Group>
+                <Group name="XS1_PORT_4F">
+                    <Signal name="tile[0]_XS1_PORT_4F" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_4F_inuse" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_4F_tWaiting" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_4F_direction" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_4F_outputThreadPc" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_4F_portDetails" radix="HEX"/>
+                </Group>
+                <Group name="XS1_PORT_1A">
+                    <Signal name="tile[0]_XS1_PORT_1A" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_1A_inuse" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_1A_tWaiting" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_1A_direction" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_1A_outputThreadPc" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_1A_portDetails" radix="HEX"/>
+                </Group>
+                <Group name="XS1_PORT_1B">
+                    <Signal name="tile[0]_XS1_PORT_1B" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_1B_inuse" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_1B_tWaiting" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_1B_direction" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_1B_outputThreadPc" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_1B_portDetails" radix="HEX"/>
+                </Group>
+                <Group name="XS1_PORT_1C">
+                    <Signal name="tile[0]_XS1_PORT_1C" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_1C_inuse" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_1C_tWaiting" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_1C_direction" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_1C_outputThreadPc" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_1C_portDetails" radix="HEX"/>
+                </Group>
+                <Group name="XS1_PORT_1D">
+                    <Signal name="tile[0]_XS1_PORT_1D" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_1D_inuse" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_1D_tWaiting" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_1D_direction" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_1D_outputThreadPc" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_1D_portDetails" radix="HEX"/>
+                </Group>
+                <Group name="XS1_PORT_1E">
+                    <Signal name="tile[0]_XS1_PORT_1E" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_1E_inuse" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_1E_tWaiting" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_1E_direction" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_1E_outputThreadPc" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_1E_portDetails" radix="HEX"/>
+                </Group>
+                <Group name="XS1_PORT_1F">
+                    <Signal name="tile[0]_XS1_PORT_1F" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_1F_inuse" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_1F_tWaiting" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_1F_direction" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_1F_outputThreadPc" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_1F_portDetails" radix="HEX"/>
+                </Group>
+                <Group name="XS1_PORT_1G">
+                    <Signal name="tile[0]_XS1_PORT_1G" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_1G_inuse" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_1G_tWaiting" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_1G_direction" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_1G_outputThreadPc" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_1G_portDetails" radix="HEX"/>
+                </Group>
+                <Group name="XS1_PORT_1H">
+                    <Signal name="tile[0]_XS1_PORT_1H" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_1H_inuse" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_1H_tWaiting" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_1H_direction" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_1H_outputThreadPc" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_1H_portDetails" radix="HEX"/>
+                </Group>
+                <Group name="XS1_PORT_1I">
+                    <Signal name="tile[0]_XS1_PORT_1I" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_1I_inuse" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_1I_tWaiting" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_1I_direction" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_1I_outputThreadPc" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_1I_portDetails" radix="HEX"/>
+                </Group>
+                <Group name="XS1_PORT_1J">
+                    <Signal name="tile[0]_XS1_PORT_1J" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_1J_inuse" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_1J_tWaiting" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_1J_direction" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_1J_outputThreadPc" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_1J_portDetails" radix="HEX"/>
+                </Group>
+                <Group name="XS1_PORT_1K">
+                    <Signal name="tile[0]_XS1_PORT_1K" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_1K_inuse" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_1K_tWaiting" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_1K_direction" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_1K_outputThreadPc" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_1K_portDetails" radix="HEX"/>
+                </Group>
+                <Group name="XS1_PORT_1L">
+                    <Signal name="tile[0]_XS1_PORT_1L" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_1L_inuse" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_1L_tWaiting" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_1L_direction" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_1L_outputThreadPc" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_1L_portDetails" radix="HEX"/>
+                </Group>
+                <Group name="XS1_PORT_1M">
+                    <Signal name="tile[0]_XS1_PORT_1M" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_1M_inuse" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_1M_tWaiting" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_1M_direction" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_1M_outputThreadPc" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_1M_portDetails" radix="HEX"/>
+                </Group>
+                <Group name="XS1_PORT_1N">
+                    <Signal name="tile[0]_XS1_PORT_1N" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_1N_inuse" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_1N_tWaiting" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_1N_direction" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_1N_outputThreadPc" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_1N_portDetails" radix="HEX"/>
+                </Group>
+                <Group name="XS1_PORT_1O">
+                    <Signal name="tile[0]_XS1_PORT_1O" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_1O_inuse" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_1O_tWaiting" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_1O_direction" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_1O_outputThreadPc" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_1O_portDetails" radix="HEX"/>
+                </Group>
+                <Group name="XS1_PORT_1P">
+                    <Signal name="tile[0]_XS1_PORT_1P" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_1P_inuse" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_1P_tWaiting" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_1P_direction" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_1P_outputThreadPc" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_1P_portDetails" radix="HEX"/>
+                </Group>
+                <Group name="XS1_PORT_32B">
+                    <Signal name="tile[0]_XS1_PORT_32B" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_32B_inuse" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_32B_tWaiting" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_32B_direction" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_32B_outputThreadPc" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_32B_portDetails" radix="HEX"/>
+                </Group>
+                <Group name="XS1_PORT_16C">
+                    <Signal name="tile[0]_XS1_PORT_16C" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_16C_inuse" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_16C_tWaiting" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_16C_direction" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_16C_outputThreadPc" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_16C_portDetails" radix="HEX"/>
+                </Group>
+                <Group name="XS1_PORT_16D">
+                    <Signal name="tile[0]_XS1_PORT_16D" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_16D_inuse" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_16D_tWaiting" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_16D_direction" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_16D_outputThreadPc" radix="HEX"/>
+                    <Signal name="tile[0]_XS1_PORT_16D_portDetails" radix="HEX"/>
+                </Group>
+            </Category>
+        </Core>
+    </Hierarchy>
+    <ValueAliases>
+    </ValueAliases>
+    <SignalDocs>
+        <SignalDoc name="tile\[\d+\]_XS1_PORT_\d+[A-Z]_direction" description="High if the port is in output mode, low if in input mode">
+            <ValueDocs>
+                <ValueDoc value="0" text="The port is in input mode"/>
+                <ValueDoc value="1" text="The port is in output mode"/>
+            </ValueDocs>
+        </SignalDoc>
+        <SignalDoc name="tile\[\d+\]_XS1_PORT_\d+[A-Z]_inuse" description="High if the port is in use">
+            <ValueDocs>
+                <ValueDoc value="0" text="The port is not in use"/>
+                <ValueDoc value="1" text="The port is in use"/>
+            </ValueDocs>
+        </SignalDoc>
+        <SignalDoc name="tile\[\d+\]_XS1_PORT_\d+[A-Z]_tWaiting" description="High if any threads are waiting on the port">
+            <ValueDocs>
+                <ValueDoc value="0" text="No threads are waiting on this port"/>
+                <ValueDoc value="1" text="Threads are waiting on this port"/>
+            </ValueDocs>
+        </SignalDoc>
+        <SignalDoc name="tile\[\d+\]_XS1_PORT_\d+[A-Z]" description="Provides a view of the retimed pads for the port">
+            <ValueDocs>
+            </ValueDocs>
+        </SignalDoc>
+        <SignalDoc name="tile\[\d+\]_XS1_PORT_\d+[A-Z]_portTime" description="The value of the port counter">
+            <ValueDocs>
+            </ValueDocs>
+        </SignalDoc>
+        <SignalDoc name="tile\[\d+\]_XS1_PORT_\d+[A-Z]_timeReg" description="The value of the ports timestamp (XC's @ operator)">
+            <ValueDocs>
+            </ValueDocs>
+        </SignalDoc>
+        <SignalDoc name="tile\[\d+\]_XS1_PORT_\d+[A-Z]_transferReg" description="The data in the ports transfer register">
+            <ValueDocs>
+            </ValueDocs>
+        </SignalDoc>
+        <SignalDoc name="tile\[\d+\]_XS1_PORT_\d+[A-Z]_shiftReg" description="The data in the ports shift register">
+            <ValueDocs>
+            </ValueDocs>
+        </SignalDoc>
+    </SignalDocs>
+    <SignalAliases>
+        <SignalAliasMap coreName="tile[0]">
+            <Entry name="XS1_PORT_1B" alias="PORT_SQI_CS_0"/>
+            <Entry name="XS1_PORT_1C" alias="PORT_SQI_SCLK_0"/>
+            <Entry name="XS1_PORT_4B" alias="PORT_SQI_SIO_0"/>
+            <Entry name="XS1_PORT_1A" alias="PORT_SSB"/>
+            <Entry name="XS1_PORT_1C" alias="PORT_SQI_SCLK_0"/>
+            <Entry name="XS1_PORT_1D" alias="PORT_SPI_MOSI"/>
+            <Entry name="XS1_PORT_1P" alias="PORT_SPI_MISO"/>
+            <Entry name="XS1_PORT_1N" alias="PORT_I2C_SCL"/>
+            <Entry name="XS1_PORT_1O" alias="PORT_I2C_SDA"/>
+            <Entry name="XS1_PORT_8C" alias="PORT_GPO"/>
+            <Entry name="XS1_PORT_8D" alias="PORT_GPI"/>
+            <Entry name="XS1_PORT_1G" alias="PORT_NOT_IN_PACKAGE_0"/>
+        </SignalAliasMap>
+        <SignalAliasMap coreName="tile[1]">
+            <Entry name="XS1_PORT_1G" alias="PORT_PDM_CLK"/>
+            <Entry name="XS1_PORT_1F" alias="PORT_PDM_DATA"/>
+            <Entry name="XS1_PORT_1D" alias="PORT_MCLK_IN_OUT"/>
+            <Entry name="XS1_PORT_1C" alias="PORT_I2S_BCLK"/>
+            <Entry name="XS1_PORT_1B" alias="PORT_I2S_LRCLK"/>
+            <Entry name="XS1_PORT_1A" alias="I2S_MIC_DATA"/>
+            <Entry name="XS1_PORT_1K" alias="I2S_DATA_IN"/>
+            <Entry name="XS1_PORT_1N" alias="PORT_NOT_IN_PACKAGE_1"/>
+        </SignalAliasMap>
+    </SignalAliases>
+</Structure>
+$end
+
+$var wire 32 po8002a0 tile[0]_XS1_PORT_32A $end
+$var wire 1 po8002b0 tile[0]_XS1_PORT_32A_inuse $end
+$var wire 1 po8002c0 tile[0]_XS1_PORT_32A_tWaiting $end
+$var wire 1 po8002d0 tile[0]_XS1_PORT_32A_direction $end
+$var wire 32 po8002l0 tile[0]_XS1_PORT_32A_outputThreadPc $end
+$var wire 32 po8002m0 tile[0]_XS1_PORT_32A_portDetails $end
+$var wire 16 po8002a1 tile[0]_XS1_PORT_16A $end
+$var wire 1 po8002b1 tile[0]_XS1_PORT_16A_inuse $end
+$var wire 1 po8002c1 tile[0]_XS1_PORT_16A_tWaiting $end
+$var wire 1 po8002d1 tile[0]_XS1_PORT_16A_direction $end
+$var wire 32 po8002l1 tile[0]_XS1_PORT_16A_outputThreadPc $end
+$var wire 32 po8002m1 tile[0]_XS1_PORT_16A_portDetails $end
+$var wire 16 po8002a2 tile[0]_XS1_PORT_16B $end
+$var wire 1 po8002b2 tile[0]_XS1_PORT_16B_inuse $end
+$var wire 1 po8002c2 tile[0]_XS1_PORT_16B_tWaiting $end
+$var wire 1 po8002d2 tile[0]_XS1_PORT_16B_direction $end
+$var wire 32 po8002l2 tile[0]_XS1_PORT_16B_outputThreadPc $end
+$var wire 32 po8002m2 tile[0]_XS1_PORT_16B_portDetails $end
+$var wire 8 po8002a3 tile[0]_XS1_PORT_8A $end
+$var wire 1 po8002b3 tile[0]_XS1_PORT_8A_inuse $end
+$var wire 1 po8002c3 tile[0]_XS1_PORT_8A_tWaiting $end
+$var wire 1 po8002d3 tile[0]_XS1_PORT_8A_direction $end
+$var wire 32 po8002l3 tile[0]_XS1_PORT_8A_outputThreadPc $end
+$var wire 32 po8002m3 tile[0]_XS1_PORT_8A_portDetails $end
+$var wire 8 po8002a4 tile[0]_XS1_PORT_8B $end
+$var wire 1 po8002b4 tile[0]_XS1_PORT_8B_inuse $end
+$var wire 1 po8002c4 tile[0]_XS1_PORT_8B_tWaiting $end
+$var wire 1 po8002d4 tile[0]_XS1_PORT_8B_direction $end
+$var wire 32 po8002l4 tile[0]_XS1_PORT_8B_outputThreadPc $end
+$var wire 32 po8002m4 tile[0]_XS1_PORT_8B_portDetails $end
+$var wire 8 po8002a5 tile[0]_XS1_PORT_8C $end
+$var wire 1 po8002b5 tile[0]_XS1_PORT_8C_inuse $end
+$var wire 1 po8002c5 tile[0]_XS1_PORT_8C_tWaiting $end
+$var wire 1 po8002d5 tile[0]_XS1_PORT_8C_direction $end
+$var wire 32 po8002l5 tile[0]_XS1_PORT_8C_outputThreadPc $end
+$var wire 32 po8002m5 tile[0]_XS1_PORT_8C_portDetails $end
+$var wire 8 po8002a6 tile[0]_XS1_PORT_8D $end
+$var wire 1 po8002b6 tile[0]_XS1_PORT_8D_inuse $end
+$var wire 1 po8002c6 tile[0]_XS1_PORT_8D_tWaiting $end
+$var wire 1 po8002d6 tile[0]_XS1_PORT_8D_direction $end
+$var wire 32 po8002l6 tile[0]_XS1_PORT_8D_outputThreadPc $end
+$var wire 32 po8002m6 tile[0]_XS1_PORT_8D_portDetails $end
+$var wire 4 po8002a7 tile[0]_XS1_PORT_4A $end
+$var wire 1 po8002b7 tile[0]_XS1_PORT_4A_inuse $end
+$var wire 1 po8002c7 tile[0]_XS1_PORT_4A_tWaiting $end
+$var wire 1 po8002d7 tile[0]_XS1_PORT_4A_direction $end
+$var wire 32 po8002l7 tile[0]_XS1_PORT_4A_outputThreadPc $end
+$var wire 32 po8002m7 tile[0]_XS1_PORT_4A_portDetails $end
+$var wire 4 po8002a8 tile[0]_XS1_PORT_4B $end
+$var wire 1 po8002b8 tile[0]_XS1_PORT_4B_inuse $end
+$var wire 1 po8002c8 tile[0]_XS1_PORT_4B_tWaiting $end
+$var wire 1 po8002d8 tile[0]_XS1_PORT_4B_direction $end
+$var wire 32 po8002l8 tile[0]_XS1_PORT_4B_outputThreadPc $end
+$var wire 32 po8002m8 tile[0]_XS1_PORT_4B_portDetails $end
+$var wire 4 po8002a9 tile[0]_XS1_PORT_4C $end
+$var wire 1 po8002b9 tile[0]_XS1_PORT_4C_inuse $end
+$var wire 1 po8002c9 tile[0]_XS1_PORT_4C_tWaiting $end
+$var wire 1 po8002d9 tile[0]_XS1_PORT_4C_direction $end
+$var wire 32 po8002l9 tile[0]_XS1_PORT_4C_outputThreadPc $end
+$var wire 32 po8002m9 tile[0]_XS1_PORT_4C_portDetails $end
+$var wire 4 po8002a10 tile[0]_XS1_PORT_4D $end
+$var wire 1 po8002b10 tile[0]_XS1_PORT_4D_inuse $end
+$var wire 1 po8002c10 tile[0]_XS1_PORT_4D_tWaiting $end
+$var wire 1 po8002d10 tile[0]_XS1_PORT_4D_direction $end
+$var wire 32 po8002l10 tile[0]_XS1_PORT_4D_outputThreadPc $end
+$var wire 32 po8002m10 tile[0]_XS1_PORT_4D_portDetails $end
+$var wire 4 po8002a11 tile[0]_XS1_PORT_4E $end
+$var wire 1 po8002b11 tile[0]_XS1_PORT_4E_inuse $end
+$var wire 1 po8002c11 tile[0]_XS1_PORT_4E_tWaiting $end
+$var wire 1 po8002d11 tile[0]_XS1_PORT_4E_direction $end
+$var wire 32 po8002l11 tile[0]_XS1_PORT_4E_outputThreadPc $end
+$var wire 32 po8002m11 tile[0]_XS1_PORT_4E_portDetails $end
+$var wire 4 po8002a12 tile[0]_XS1_PORT_4F $end
+$var wire 1 po8002b12 tile[0]_XS1_PORT_4F_inuse $end
+$var wire 1 po8002c12 tile[0]_XS1_PORT_4F_tWaiting $end
+$var wire 1 po8002d12 tile[0]_XS1_PORT_4F_direction $end
+$var wire 32 po8002l12 tile[0]_XS1_PORT_4F_outputThreadPc $end
+$var wire 32 po8002m12 tile[0]_XS1_PORT_4F_portDetails $end
+$var wire 1 po8002a13 tile[0]_XS1_PORT_1A $end
+$var wire 1 po8002b13 tile[0]_XS1_PORT_1A_inuse $end
+$var wire 1 po8002c13 tile[0]_XS1_PORT_1A_tWaiting $end
+$var wire 1 po8002d13 tile[0]_XS1_PORT_1A_direction $end
+$var wire 32 po8002l13 tile[0]_XS1_PORT_1A_outputThreadPc $end
+$var wire 32 po8002m13 tile[0]_XS1_PORT_1A_portDetails $end
+$var wire 1 po8002a14 tile[0]_XS1_PORT_1B $end
+$var wire 1 po8002b14 tile[0]_XS1_PORT_1B_inuse $end
+$var wire 1 po8002c14 tile[0]_XS1_PORT_1B_tWaiting $end
+$var wire 1 po8002d14 tile[0]_XS1_PORT_1B_direction $end
+$var wire 32 po8002l14 tile[0]_XS1_PORT_1B_outputThreadPc $end
+$var wire 32 po8002m14 tile[0]_XS1_PORT_1B_portDetails $end
+$var wire 1 po8002a15 tile[0]_XS1_PORT_1C $end
+$var wire 1 po8002b15 tile[0]_XS1_PORT_1C_inuse $end
+$var wire 1 po8002c15 tile[0]_XS1_PORT_1C_tWaiting $end
+$var wire 1 po8002d15 tile[0]_XS1_PORT_1C_direction $end
+$var wire 32 po8002l15 tile[0]_XS1_PORT_1C_outputThreadPc $end
+$var wire 32 po8002m15 tile[0]_XS1_PORT_1C_portDetails $end
+$var wire 1 po8002a16 tile[0]_XS1_PORT_1D $end
+$var wire 1 po8002b16 tile[0]_XS1_PORT_1D_inuse $end
+$var wire 1 po8002c16 tile[0]_XS1_PORT_1D_tWaiting $end
+$var wire 1 po8002d16 tile[0]_XS1_PORT_1D_direction $end
+$var wire 32 po8002l16 tile[0]_XS1_PORT_1D_outputThreadPc $end
+$var wire 32 po8002m16 tile[0]_XS1_PORT_1D_portDetails $end
+$var wire 1 po8002a17 tile[0]_XS1_PORT_1E $end
+$var wire 1 po8002b17 tile[0]_XS1_PORT_1E_inuse $end
+$var wire 1 po8002c17 tile[0]_XS1_PORT_1E_tWaiting $end
+$var wire 1 po8002d17 tile[0]_XS1_PORT_1E_direction $end
+$var wire 32 po8002l17 tile[0]_XS1_PORT_1E_outputThreadPc $end
+$var wire 32 po8002m17 tile[0]_XS1_PORT_1E_portDetails $end
+$var wire 1 po8002a18 tile[0]_XS1_PORT_1F $end
+$var wire 1 po8002b18 tile[0]_XS1_PORT_1F_inuse $end
+$var wire 1 po8002c18 tile[0]_XS1_PORT_1F_tWaiting $end
+$var wire 1 po8002d18 tile[0]_XS1_PORT_1F_direction $end
+$var wire 32 po8002l18 tile[0]_XS1_PORT_1F_outputThreadPc $end
+$var wire 32 po8002m18 tile[0]_XS1_PORT_1F_portDetails $end
+$var wire 1 po8002a19 tile[0]_XS1_PORT_1G $end
+$var wire 1 po8002b19 tile[0]_XS1_PORT_1G_inuse $end
+$var wire 1 po8002c19 tile[0]_XS1_PORT_1G_tWaiting $end
+$var wire 1 po8002d19 tile[0]_XS1_PORT_1G_direction $end
+$var wire 32 po8002l19 tile[0]_XS1_PORT_1G_outputThreadPc $end
+$var wire 32 po8002m19 tile[0]_XS1_PORT_1G_portDetails $end
+$var wire 1 po8002a20 tile[0]_XS1_PORT_1H $end
+$var wire 1 po8002b20 tile[0]_XS1_PORT_1H_inuse $end
+$var wire 1 po8002c20 tile[0]_XS1_PORT_1H_tWaiting $end
+$var wire 1 po8002d20 tile[0]_XS1_PORT_1H_direction $end
+$var wire 32 po8002l20 tile[0]_XS1_PORT_1H_outputThreadPc $end
+$var wire 32 po8002m20 tile[0]_XS1_PORT_1H_portDetails $end
+$var wire 1 po8002a21 tile[0]_XS1_PORT_1I $end
+$var wire 1 po8002b21 tile[0]_XS1_PORT_1I_inuse $end
+$var wire 1 po8002c21 tile[0]_XS1_PORT_1I_tWaiting $end
+$var wire 1 po8002d21 tile[0]_XS1_PORT_1I_direction $end
+$var wire 32 po8002l21 tile[0]_XS1_PORT_1I_outputThreadPc $end
+$var wire 32 po8002m21 tile[0]_XS1_PORT_1I_portDetails $end
+$var wire 1 po8002a22 tile[0]_XS1_PORT_1J $end
+$var wire 1 po8002b22 tile[0]_XS1_PORT_1J_inuse $end
+$var wire 1 po8002c22 tile[0]_XS1_PORT_1J_tWaiting $end
+$var wire 1 po8002d22 tile[0]_XS1_PORT_1J_direction $end
+$var wire 32 po8002l22 tile[0]_XS1_PORT_1J_outputThreadPc $end
+$var wire 32 po8002m22 tile[0]_XS1_PORT_1J_portDetails $end
+$var wire 1 po8002a23 tile[0]_XS1_PORT_1K $end
+$var wire 1 po8002b23 tile[0]_XS1_PORT_1K_inuse $end
+$var wire 1 po8002c23 tile[0]_XS1_PORT_1K_tWaiting $end
+$var wire 1 po8002d23 tile[0]_XS1_PORT_1K_direction $end
+$var wire 32 po8002l23 tile[0]_XS1_PORT_1K_outputThreadPc $end
+$var wire 32 po8002m23 tile[0]_XS1_PORT_1K_portDetails $end
+$var wire 1 po8002a24 tile[0]_XS1_PORT_1L $end
+$var wire 1 po8002b24 tile[0]_XS1_PORT_1L_inuse $end
+$var wire 1 po8002c24 tile[0]_XS1_PORT_1L_tWaiting $end
+$var wire 1 po8002d24 tile[0]_XS1_PORT_1L_direction $end
+$var wire 32 po8002l24 tile[0]_XS1_PORT_1L_outputThreadPc $end
+$var wire 32 po8002m24 tile[0]_XS1_PORT_1L_portDetails $end
+$var wire 1 po8002a25 tile[0]_XS1_PORT_1M $end
+$var wire 1 po8002b25 tile[0]_XS1_PORT_1M_inuse $end
+$var wire 1 po8002c25 tile[0]_XS1_PORT_1M_tWaiting $end
+$var wire 1 po8002d25 tile[0]_XS1_PORT_1M_direction $end
+$var wire 32 po8002l25 tile[0]_XS1_PORT_1M_outputThreadPc $end
+$var wire 32 po8002m25 tile[0]_XS1_PORT_1M_portDetails $end
+$var wire 1 po8002a26 tile[0]_XS1_PORT_1N $end
+$var wire 1 po8002b26 tile[0]_XS1_PORT_1N_inuse $end
+$var wire 1 po8002c26 tile[0]_XS1_PORT_1N_tWaiting $end
+$var wire 1 po8002d26 tile[0]_XS1_PORT_1N_direction $end
+$var wire 32 po8002l26 tile[0]_XS1_PORT_1N_outputThreadPc $end
+$var wire 32 po8002m26 tile[0]_XS1_PORT_1N_portDetails $end
+$var wire 1 po8002a27 tile[0]_XS1_PORT_1O $end
+$var wire 1 po8002b27 tile[0]_XS1_PORT_1O_inuse $end
+$var wire 1 po8002c27 tile[0]_XS1_PORT_1O_tWaiting $end
+$var wire 1 po8002d27 tile[0]_XS1_PORT_1O_direction $end
+$var wire 32 po8002l27 tile[0]_XS1_PORT_1O_outputThreadPc $end
+$var wire 32 po8002m27 tile[0]_XS1_PORT_1O_portDetails $end
+$var wire 1 po8002a28 tile[0]_XS1_PORT_1P $end
+$var wire 1 po8002b28 tile[0]_XS1_PORT_1P_inuse $end
+$var wire 1 po8002c28 tile[0]_XS1_PORT_1P_tWaiting $end
+$var wire 1 po8002d28 tile[0]_XS1_PORT_1P_direction $end
+$var wire 32 po8002l28 tile[0]_XS1_PORT_1P_outputThreadPc $end
+$var wire 32 po8002m28 tile[0]_XS1_PORT_1P_portDetails $end
+$var wire 32 po8002a29 tile[0]_XS1_PORT_32B $end
+$var wire 1 po8002b29 tile[0]_XS1_PORT_32B_inuse $end
+$var wire 1 po8002c29 tile[0]_XS1_PORT_32B_tWaiting $end
+$var wire 1 po8002d29 tile[0]_XS1_PORT_32B_direction $end
+$var wire 32 po8002l29 tile[0]_XS1_PORT_32B_outputThreadPc $end
+$var wire 32 po8002m29 tile[0]_XS1_PORT_32B_portDetails $end
+$var wire 16 po8002a30 tile[0]_XS1_PORT_16C $end
+$var wire 1 po8002b30 tile[0]_XS1_PORT_16C_inuse $end
+$var wire 1 po8002c30 tile[0]_XS1_PORT_16C_tWaiting $end
+$var wire 1 po8002d30 tile[0]_XS1_PORT_16C_direction $end
+$var wire 32 po8002l30 tile[0]_XS1_PORT_16C_outputThreadPc $end
+$var wire 32 po8002m30 tile[0]_XS1_PORT_16C_portDetails $end
+$var wire 16 po8002a31 tile[0]_XS1_PORT_16D $end
+$var wire 1 po8002b31 tile[0]_XS1_PORT_16D_inuse $end
+$var wire 1 po8002c31 tile[0]_XS1_PORT_16D_tWaiting $end
+$var wire 1 po8002d31 tile[0]_XS1_PORT_16D_direction $end
+$var wire 32 po8002l31 tile[0]_XS1_PORT_16D_outputThreadPc $end
+$var wire 32 po8002m31 tile[0]_XS1_PORT_16D_portDetails $end
+$dumpvars
+b00000000000000000000000000000000 po8002a0
+0po8002b0
+0po8002c0
+0po8002d0
+b00000000000000000000000000000000 po8002l0
+b00000000000000001000000000000010 po8002m0
+b0000000000000000 po8002a1
+0po8002b1
+0po8002c1
+0po8002d1
+b00000000000000000000000000000000 po8002l1
+b00000000000000001000000000000010 po8002m1
+b0000000000000000 po8002a2
+0po8002b2
+0po8002c2
+0po8002d2
+b00000000000000000000000000000000 po8002l2
+b00000000000000001000000000000010 po8002m2
+b00000000 po8002a3
+0po8002b3
+0po8002c3
+0po8002d3
+b00000000000000000000000000000000 po8002l3
+b00000000000000001000000000000010 po8002m3
+b00000000 po8002a4
+0po8002b4
+0po8002c4
+0po8002d4
+b00000000000000000000000000000000 po8002l4
+b00000000000000001000000000000010 po8002m4
+b00000000 po8002a5
+0po8002b5
+0po8002c5
+0po8002d5
+b00000000000000000000000000000000 po8002l5
+b00000000000000001000000000000010 po8002m5
+b00000000 po8002a6
+0po8002b6
+0po8002c6
+0po8002d6
+b00000000000000000000000000000000 po8002l6
+b00000000000000001000000000000010 po8002m6
+b0000 po8002a7
+0po8002b7
+0po8002c7
+0po8002d7
+b00000000000000000000000000000000 po8002l7
+b00000000000000001000000000000010 po8002m7
+b0000 po8002a8
+0po8002b8
+0po8002c8
+0po8002d8
+b00000000000000000000000000000000 po8002l8
+b00000000000000001000000000000010 po8002m8
+b0000 po8002a9
+0po8002b9
+0po8002c9
+0po8002d9
+b00000000000000000000000000000000 po8002l9
+b00000000000000001000000000000010 po8002m9
+b0000 po8002a10
+0po8002b10
+0po8002c10
+0po8002d10
+b00000000000000000000000000000000 po8002l10
+b00000000000000001000000000000010 po8002m10
+b0000 po8002a11
+0po8002b11
+0po8002c11
+0po8002d11
+b00000000000000000000000000000000 po8002l11
+b00000000000000001000000000000010 po8002m11
+b0000 po8002a12
+0po8002b12
+0po8002c12
+0po8002d12
+b00000000000000000000000000000000 po8002l12
+b00000000000000001000000000000010 po8002m12
+0po8002a13
+0po8002b13
+0po8002c13
+0po8002d13
+b00000000000000000000000000000000 po8002l13
+b00000000000000001000000000000010 po8002m13
+0po8002a14
+0po8002b14
+0po8002c14
+0po8002d14
+b00000000000000000000000000000000 po8002l14
+b00000000000000001000000000000010 po8002m14
+0po8002a15
+0po8002b15
+0po8002c15
+0po8002d15
+b00000000000000000000000000000000 po8002l15
+b00000000000000001000000000000010 po8002m15
+0po8002a16
+0po8002b16
+0po8002c16
+0po8002d16
+b00000000000000000000000000000000 po8002l16
+b00000000000000001000000000000010 po8002m16
+0po8002a17
+0po8002b17
+0po8002c17
+0po8002d17
+b00000000000000000000000000000000 po8002l17
+b00000000000000001000000000000010 po8002m17
+0po8002a18
+0po8002b18
+0po8002c18
+0po8002d18
+b00000000000000000000000000000000 po8002l18
+b00000000000000001000000000000010 po8002m18
+0po8002a19
+0po8002b19
+0po8002c19
+0po8002d19
+b00000000000000000000000000000000 po8002l19
+b00000000000000001000000000000010 po8002m19
+0po8002a20
+0po8002b20
+0po8002c20
+0po8002d20
+b00000000000000000000000000000000 po8002l20
+b00000000000000001000000000000010 po8002m20
+0po8002a21
+0po8002b21
+0po8002c21
+0po8002d21
+b00000000000000000000000000000000 po8002l21
+b00000000000000001000000000000010 po8002m21
+0po8002a22
+0po8002b22
+0po8002c22
+0po8002d22
+b00000000000000000000000000000000 po8002l22
+b00000000000000001000000000000010 po8002m22
+0po8002a23
+0po8002b23
+0po8002c23
+0po8002d23
+b00000000000000000000000000000000 po8002l23
+b00000000000000001000000000000010 po8002m23
+0po8002a24
+0po8002b24
+0po8002c24
+0po8002d24
+b00000000000000000000000000000000 po8002l24
+b00000000000000001000000000000010 po8002m24
+0po8002a25
+0po8002b25
+0po8002c25
+0po8002d25
+b00000000000000000000000000000000 po8002l25
+b00000000000000001000000000000010 po8002m25
+0po8002a26
+0po8002b26
+0po8002c26
+0po8002d26
+b00000000000000000000000000000000 po8002l26
+b00000000000000001000000000000010 po8002m26
+0po8002a27
+0po8002b27
+0po8002c27
+0po8002d27
+b00000000000000000000000000000000 po8002l27
+b00000000000000001000000000000010 po8002m27
+0po8002a28
+0po8002b28
+0po8002c28
+0po8002d28
+b00000000000000000000000000000000 po8002l28
+b00000000000000001000000000000010 po8002m28
+b00000000000000000000000000000000 po8002a29
+0po8002b29
+0po8002c29
+0po8002d29
+b00000000000000000000000000000000 po8002l29
+b00000000000000001000000000000010 po8002m29
+b0000000000000000 po8002a30
+0po8002b30
+0po8002c30
+0po8002d30
+b00000000000000000000000000000000 po8002l30
+b00000000000000001000000000000010 po8002m30
+b0000000000000000 po8002a31
+0po8002b31
+0po8002c31
+0po8002d31
+b00000000000000000000000000000000 po8002l31
+b00000000000000001000000000000010 po8002m31
+$end
+
+#60038
+1po8002b26
+
+#60039
+1po8002a26
+
+#60043
+0po8002a26
+
+#60048
+1po8002b27
+
+#60049
+1po8002a27
+
+#60053
+0po8002a27
+
+#60905
+b00000000000010000000000111010000 po8002l26
+
+#60906
+1po8002d26
+
+#60911
+1po8002a26
+
+#64265
+b00000000000010000000000111010000 po8002l27
+
+#64266
+1po8002d27
+
+#64271
+1po8002a27
+
+#72275
+b00000000000010000000000111100100 po8002l26
+
+#72281
+0po8002a26
+
+#80309
+b00000000000010000000000111100100 po8002l27
+
+#80315
+0po8002a27
+
+#88355
+b00000000000010000000000111010000 po8002l26
+
+#88361
+1po8002a26
+
+#96407
+b00000000000010000000000111010000 po8002l27
+
+#96413
+1po8002a27
+
+#104453
+b00000000000010000000000111100100 po8002l26
+
+#104459
+0po8002a26
+
+#112487
+b00000000000010000000000111100100 po8002l27
+
+#112493
+0po8002a27
+
+#120527
+b00000000000010000000000111010000 po8002l26
+
+#120533
+1po8002a26
+
+#128585
+b00000000000010000000000111010000 po8002l27
+
+#128591
+1po8002a27
+
+#136631
+b00000000000010000000000111100100 po8002l26
+
+#136637
+0po8002a26
+
+#144659
+b00000000000010000000000111100100 po8002l27
+
+#144665
+0po8002a27
+
+#152705
+b00000000000010000000000111010000 po8002l26
+
+#152711
+1po8002a26
+
+#160757
+b00000000000010000000000111010000 po8002l27
+
+#160763
+1po8002a27
+
+#168803
+b00000000000010000000000111100100 po8002l26
+
+#168809
+0po8002a26
+
+#176837
+b00000000000010000000000111100100 po8002l27
+
+#176843
+0po8002a27
+
+#184883
+b00000000000010000000000111010000 po8002l26
+
+#184889
+1po8002a26
+
+#192935
+b00000000000010000000000111010000 po8002l27
+
+#192941
+1po8002a27
+
+#200981
+b00000000000010000000000111100100 po8002l26
+
+#200987
+0po8002a26
+
+#209015
+b00000000000010000000000111100100 po8002l27
+
+#209021
+0po8002a27
+
+#217055
+b00000000000010000000000111010000 po8002l26
+
+#217061
+1po8002a26
+
+#225113
+b00000000000010000000000111010000 po8002l27
+
+#225119
+1po8002a27
+
+#233159
+b00000000000010000000000111100100 po8002l26
+
+#233165
+0po8002a26
+
+#241187
+b00000000000010000000000111100100 po8002l27
+
+#241193
+0po8002a27
+
+#249233
+b00000000000010000000000111010000 po8002l26
+
+#249239
+1po8002a26
+
+#257285
+b00000000000010000000000111010000 po8002l27
+
+#257291
+1po8002a27
+
+#265331
+b00000000000010000000000111100100 po8002l26
+
+#265337
+0po8002a26
+
+#273365
+b00000000000010000000000111100100 po8002l27
+
+#273371
+0po8002a27
+
+#281411
+b00000000000010000000000111010000 po8002l26
+
+#281417
+1po8002a26
+
+#289463
+b00000000000010000000000111010000 po8002l27
+
+#289469
+1po8002a27
+
+#297509
+b00000000000010000000000111100100 po8002l26
+
+#297515
+0po8002a26
+
+#305543
+b00000000000010000000000111100100 po8002l27
+
+#305549
+0po8002a27
+
+#313583
+b00000000000010000000000111010000 po8002l26
+
+#313589
+1po8002a26
+
+#321641
+b00000000000010000000000111010000 po8002l27
+
+#321647
+1po8002a27
+
+#329687
+b00000000000010000000000111100100 po8002l26
+
+#329693
+0po8002a26
+
+#337715
+b00000000000010000000000111100100 po8002l27
+
+#337721
+0po8002a27
+
+#345761
+b00000000000010000000000111010000 po8002l26
+
+#345767
+1po8002a26
+
+#353813
+b00000000000010000000000111010000 po8002l27
+
+#353819
+1po8002a27
+
+#361859
+b00000000000010000000000111100100 po8002l26
+
+#361865
+0po8002a26
+
+#369893
+b00000000000010000000000111100100 po8002l27
+
+#369899
+0po8002a27
+
+#377939
+b00000000000010000000000111010000 po8002l26
+
+#377945
+1po8002a26
+
+#385991
+b00000000000010000000000111010000 po8002l27
+
+#385997
+1po8002a27
+
+#394037
+b00000000000010000000000111100100 po8002l26
+
+#394043
+0po8002a26
+
+#402071
+b00000000000010000000000111100100 po8002l27
+
+#402077
+0po8002a27
+
+#410111
+b00000000000010000000000111010000 po8002l26
+
+#410117
+1po8002a26
+
+#418169
+b00000000000010000000000111010000 po8002l27
+
+#418175
+1po8002a27
+
+#426215
+b00000000000010000000000111100100 po8002l26
+
+#426221
+0po8002a26
+
+#434243
+b00000000000010000000000111100100 po8002l27
+
+#434249
+0po8002a27
+
+#442289
+b00000000000010000000000111010000 po8002l26
+
+#442295
+1po8002a26
+
+#450341
+b00000000000010000000000111010000 po8002l27
+
+#450347
+1po8002a27
+
+#458387
+b00000000000010000000000111100100 po8002l26
+
+#458393
+0po8002a26
+
+#466421
+b00000000000010000000000111100100 po8002l27
+
+#466427
+0po8002a27
+
+#474467
+b00000000000010000000000111010000 po8002l26
+
+#474473
+1po8002a26
+
+#482519
+b00000000000010000000000111010000 po8002l27
+
+#482525
+1po8002a27
+
+#490565
+b00000000000010000000000111100100 po8002l26
+
+#490571
+0po8002a26
+
+#498599
+b00000000000010000000000111100100 po8002l27
+
+#498605
+0po8002a27
+
+#506639
+b00000000000010000000000111010000 po8002l26
+
+#506645
+1po8002a26
+
+#514697
+b00000000000010000000000111010000 po8002l27
+
+#514703
+1po8002a27
+
+#522743
+b00000000000010000000000111100100 po8002l26
+
+#522749
+0po8002a26
+
+#530771
+b00000000000010000000000111100100 po8002l27
+
+#530777
+0po8002a27
+
+#538817
+b00000000000010000000000111010000 po8002l26
+
+#538823
+1po8002a26
+
+#546875
+b00000000000010000000000111111100 po8002l27
+
+#554897
+b00000000000010000000000111100100 po8002l26
+
+#554903
+0po8002a26
+
+#563279
+b00000000000010000000000111010000 po8002l26
+
+#563285
+1po8002a26
+
+#571661
+b00000000000010000000000111100100 po8002l26
+
+#571667
+0po8002a26
+
+#580043
+b00000000000010000000000111010000 po8002l26
+
+#580049
+1po8002a26
+
+#588425
+b00000000000010000000000111100100 po8002l26
+
+#588431
+0po8002a26
+
+#596807
+b00000000000010000000000111010000 po8002l26
+
+#596813
+1po8002a26
+
+#605189
+b00000000000010000000000111100100 po8002l26
+
+#605195
+0po8002a26
+
+#613571
+b00000000000010000000000111010000 po8002l26
+
+#613577
+1po8002a26
+
+#621953
+b00000000000010000000000111100100 po8002l26
+
+#621959
+0po8002a26
+
+#630335
+b00000000000010000000000111111100 po8002l26
+

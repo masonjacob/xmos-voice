@@ -14,14 +14,6 @@ extern "C" {
 #include "spi.h"
 }
 
-// #include <stdlib.h> /* for size_t */
-// #include <stdint.h>
-// #include <xclib.h> /* for byterev() */
-// #include <xcore/assert.h>
-// #include <xcore/port.h>
-// #include <xcore/clock.h>
-// #include <xcore/thread.h>
-
 #define INIT_REGISTER(REG) REG##_t REG##_register = REG##_t
 #define INIT2130_REGISTER(REG) TMC2130_n::REG##_t REG##_register = TMC2130_n::REG##_t
 #define INIT2160_REGISTER(REG) TMC2160_n::REG##_t REG##_register = TMC2160_n::REG##_t

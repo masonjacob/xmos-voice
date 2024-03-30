@@ -3,6 +3,9 @@
     "files.associations": {
         "xutility": "cpp",
         "cstdint": "cpp",
-        "ostream": "cpp"
+        "ostream": "cpp",
+        "vector": "cpp",
+        "iostream": "cpp",
+        "algorithm": "cpp"
     }
 }
