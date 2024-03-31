@@ -95,33 +95,6 @@ double approximatePartialDerivative(double (*func)(double, double, double, doubl
     return (forward - backward) / (2 * h);
 }
 
-// Forward declaration of the function template to calculate storage for any type
-template<typename T>
-size_t calculateStorage(const T& value);
-
-// Function template to calculate storage for vectors, specializes for vector types
-template<typename T>
-size_t calculateVectorStorage(const std::vector<T>& vec) {
-    size_t storage = sizeof(vec); // Size of vector object itself
-    for (const auto& item : vec) {
-        storage += calculateStorage(item); // Calculate storage of each item in vector
-    }
-    storage += (vec.capacity() - vec.size()) * sizeof(T); // Account for vector capacity
-    return storage;
-}
-
-// Function template specialization for non-vector types, assumes trivial storage calculation
-template<typename T>
-size_t calculateStorage(const T& value) {
-    return sizeof(value); // By default, return the size of the value
-}
-
-// Template specialization for vectors, calls calculateVectorStorage
-template<typename T>
-size_t calculateStorage(const std::vector<T>& vec) {
-    return calculateVectorStorage(vec);
-}
-
 /*Given an a current Kpoint (which holds 5 angles, an xyz coordinate), generate the angles needed to create the proper angles to yield the new
 desired xyz coordinate. Needs a starting point, as given, as the Ax =B matrix mathematics, uses a starting point,
 then begins picking the angle changes that yield the highest change towards our target position. It iterates until

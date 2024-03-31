@@ -1,6 +1,7 @@
+#include "KinematicSolver.h"
+#include <cmath>
 #include <iostream>
 #include <vector>
-#include <cmath>  // Include the cmath library to use sqrt
 #include <ostream>
 #include <cstdlib> // Required for system()
 #include <type_traits>  
@@ -8,118 +9,62 @@
 #include <Eigen/Dense>
 #include "KinematicPoint.h"
 
-//g++ -I C:\Users\Derek\Downloads\eigen-3.4.0\eigen-3.4.0\  main.cpp KinematicPoint.cpp -o prog
+// Constructor implementation
+KinematicSolver::KinematicSolver(double minS1, double maxS1, double minJ1, double maxJ1, double L1,
+                                 double minJ2, double maxJ2, double L2, double minJ3, double maxJ3,
+                                 double L3, double minS3, double maxS3, double toleranceValue,
+                                 double minXValue, double minYValue, double minZValue,
+                                 double maxXValue, double maxYValue, double maxZValue)
+: minS1angle(minS1), maxS1angle(maxS1),
+  minJ1angle(minJ1), maxJ1angle(maxJ1),
+  minJ2angle(minJ2), maxJ2angle(maxJ2),
+  minJ3angle(minJ3), maxJ3angle(maxJ3),
+  minS3angle(minS3), maxS3angle(maxS3),
+  L1length(L1), L2length(L2), L3length(L3),
+  tolerance(toleranceValue),
+  minX(minXValue), minY(minYValue), minZ(minZValue),
+  maxX(maxXValue), maxY(maxYValue), maxZ(maxZValue) {
+}
 
-//global variables
-const double minS1angle = -180;
-const double maxS1angle = 180;
-
-const double minJ1angle = -135;
-const double maxJ1angle = 135;
-const double L1length = 1;
-
-const double minJ2angle = -135;
-const double maxJ2angle = 135;
-const double L2length = 1;
-
-const double minJ3angle = -135;
-const double maxJ3angle = 135;
-const double L3length = 1;
-
-const double minS3angle = -180;
-const double maxS3angle = 180;
-
- // Define a tolerance for the convergence
-double tolerance = 0.001; // Example value, adjust as needed
-
-//Generate starting Kpoint for our initial position, which will be 0 for all the angles and (0,0) for the x, y positon
-KinematicPoint currentkpoint = KinematicPoint(0, 0, 0, 0, 0, 0, 0, 3);
-                                    //        S1,J1,J2,J3,S3  X, Y, Z
-
-double maxX = L1length + L2length + L3length;
-double maxY = maxX;
-double maxZ = maxX;
-double minX = 0;
-double minY = 0;
-double minZ = 0;
-
-// Define a constant for pi.
-const double PI = 3.14159265358979323846;
-
-// Function to convert degrees to radians
-double degreesToRadians(double degrees) {
+// Utility functions implementation
+double KinematicSolver::degreesToRadians(double degrees) const {
     return degrees * (PI / 180.0);
 }
 
-// Function for x position
-double xPosition(double S1angle, double J1angle, double J2angle, double J3angle, double S3angle) {
+double KinematicSolver::xPosition(double S1angle, double J1angle, double J2angle, double J3angle, double S3angle) const {
+    // Example implementation, adjust as needed
     return std::cos(degreesToRadians(S1angle)) *
-           (L1length * std::sin(degreesToRadians(J1angle)) + 
-            L2length * std::sin(degreesToRadians(J1angle + J2angle))) + 
+           (L1length * std::sin(degreesToRadians(J1angle)) +
+            L2length * std::sin(degreesToRadians(J1angle + J2angle))) +
            std::cos(degreesToRadians(S1angle + S3angle)) *
            L3length * std::sin(degreesToRadians(J1angle + J2angle + J3angle));
 }
 
-// Function for y position
-double yPosition(double S1angle, double J1angle, double J2angle, double J3angle, double S3angle) {
+double KinematicSolver::yPosition(double S1angle, double J1angle, double J2angle, double J3angle, double S3angle) const {
+    // Example implementation, adjust as needed
     return std::sin(degreesToRadians(S1angle)) *
-           (L1length * std::sin(degreesToRadians(J1angle)) + 
+           (L1length * std::sin(degreesToRadians(J1angle)) +
             L2length * std::sin(degreesToRadians(J1angle + J2angle))) +
            std::sin(degreesToRadians(S1angle + S3angle)) * L3length * std::sin(degreesToRadians(J1angle + J2angle + J3angle));
 }
 
-// Function for z position
-double zPosition(double S1angle, double J1angle, double J2angle, double J3angle, double S3angle) {
-    return L1length * std::sin(degreesToRadians(J1angle)) + 
-           L2length * std::sin(degreesToRadians(J1angle + J2angle)) + 
+double KinematicSolver::zPosition(double S1angle, double J1angle, double J2angle, double J3angle, double S3angle) const {
+    // Example implementation, adjust as needed
+    return L1length * std::sin(degreesToRadians(J1angle)) +
+           L2length * std::sin(degreesToRadians(J1angle + J2angle)) +
            L3length * std::sin(degreesToRadians(J1angle + J2angle + J3angle));
 }
 
-// Function to approximate partial derivative
-double approximatePartialDerivative(double (*func)(double, double, double, double, double), 
-                                    double S1angle, double J1angle, double J2angle, double J3angle, double S3angle, 
-                                    int angleIdx, 
-                                    double h = 1e-5) {
-    // Array to store current angles
+double KinematicSolver::approximatePartialDerivative(double (*func)(double, double, double, double, double), 
+                                                     double S1angle, double J1angle, double J2angle, double J3angle, double S3angle, 
+                                                     int angleIdx, double h) const {
+    // Implementation of the partial derivative approximation
     double angles[5] = {S1angle, J1angle, J2angle, J3angle, S3angle};
-
-    // Modify angle at index for forward difference
     angles[angleIdx] += h;
     double forward = func(angles[0], angles[1], angles[2], angles[3], angles[4]);
-
-    // Modify angle at index for backward difference
     angles[angleIdx] -= 2 * h;
     double backward = func(angles[0], angles[1], angles[2], angles[3], angles[4]);
-
-    // Compute derivative
     return (forward - backward) / (2 * h);
-}
-
-// Forward declaration of the function template to calculate storage for any type
-template<typename T>
-size_t calculateStorage(const T& value);
-
-// Function template to calculate storage for vectors, specializes for vector types
-template<typename T>
-size_t calculateVectorStorage(const std::vector<T>& vec) {
-    size_t storage = sizeof(vec); // Size of vector object itself
-    for (const auto& item : vec) {
-        storage += calculateStorage(item); // Calculate storage of each item in vector
-    }
-    storage += (vec.capacity() - vec.size()) * sizeof(T); // Account for vector capacity
-    return storage;
-}
-
-// Function template specialization for non-vector types, assumes trivial storage calculation
-template<typename T>
-size_t calculateStorage(const T& value) {
-    return sizeof(value); // By default, return the size of the value
-}
-
-// Template specialization for vectors, calls calculateVectorStorage
-template<typename T>
-size_t calculateStorage(const std::vector<T>& vec) {
-    return calculateVectorStorage(vec);
 }
 
 /*Given an a current Kpoint (which holds 5 angles, an xyz coordinate), generate the angles needed to create the proper angles to yield the new
@@ -146,8 +91,10 @@ KinematicPoint getKinematicPointAtoB(KinematicPoint currentkp, double desiredx, 
     double currenty = currentkp.getY();
     double currentz = currentkp.getZ();
 
+
+
     // Compute INTIIAL partial derivatives for x, y , z
-    double dx_dS1 = approximatePartialDerivative(xPosition, S1angle, J1angle, J2angle, J3angle, S3angle, 0);
+    double dx_dS1 = approximatePartialDerivative(this->xPosition, S1angle, J1angle, J2angle, J3angle, S3angle, 0);
     double dx_dJ1 = approximatePartialDerivative(xPosition, S1angle, J1angle, J2angle, J3angle, S3angle, 1);
     double dx_dJ2 = approximatePartialDerivative(xPosition, S1angle, J1angle, J2angle, J3angle, S3angle, 2);
     double dx_dJ3 = approximatePartialDerivative(xPosition, S1angle, J1angle, J2angle, J3angle, S3angle, 3);
@@ -251,69 +198,4 @@ KinematicPoint getKinematicPointAtoB(KinematicPoint currentkp, double desiredx, 
     }
 
     return currentkp;
-}
-
-int main() 
-{
-
-    auto start = std::chrono::high_resolution_clock::now();
-
-    double currentx = 2, currenty = 0, currentz = 2;
-    double finalx = 1, finaly = 1, finalz = 1;
-    double S1angle = 0, J1angle = 11, J2angle =44, J3angle = 27, S3angle = 0;
-
-    KinematicPoint currentkp = KinematicPoint(S1angle, J1angle, J2angle, J3angle, S3angle, currentx, currenty, currentz);
-
-    // int numofpointsAtoB = 10; // Custom length for the vector
-    // std::vector<KinematicPoint> pointsbetweenAtoB;
-
-    std::cout << getKinematicPointAtoB(currentkp, 1.531, 1.494, 1.5) << std::endl;
-    std::cout << currentkp << std::endl;
-    //KinematicPoint nextKinematicPoint = getKinematicPointAtoB(currentkp, 1.63636, 0, 1.63636);
-
-    //
-
-      // Loop to generate and store the points
-    // for (int i = 1; i <= numofpointsAtoB + 1; i++) 
-    // {
-        
-    //     double t = i / (double)(numofpointsAtoB + 1); // Calculate the fraction
-
-        
-
-
-    //     double desiredx = currentkp.getX() + t * (finalx - currentkp.getX());
-    //     double desiredy = currentkp.getY() + t * (finaly - currentkp.getY());
-    //     double desiredz = currentkp.getZ() + t * (finalz - currentkp.getZ());
-
-    //     //Round to the milimeter
-    //     desiredx = std::round(desiredx * 10.0) / 10.0;
-    //     desiredy = std::round(desiredy * 10.0) / 10.0;
-    //     desiredz = std::round(desiredz * 10.0) / 10.0;
-
-    //     std::cout << desiredx << std::endl;        
-    //    std::cout << desiredy << std::endl;        
-    //     std::cout << desiredz << std::endl;        
-
-    //     KinematicPoint resultkp = getKinematicPointAtoB(currentkp, desiredx, desiredy, desiredz);        
-
-    //   std::cout << resultkp << std::endl;
-
-    //  //   std::cout << "i: " << i << std::endl;
-
-    //     pointsbetweenAtoB.push_back(resultkp);
-    // }
-
-
-
-     // Get the ending timepoint
-    auto stop = std::chrono::high_resolution_clock::now();
-
-    // Calculate the duration
-    auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(stop - start);
-
-    // Output the duration
-    std::cout << "Time taken by function: " << duration.count() << " milliseconds" << std::endl;
-
-    return 0;
 }

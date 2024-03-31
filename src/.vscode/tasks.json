@@ -8,7 +8,7 @@
                 "-fdiagnostics-color=always",
                 "-g",
                 "${file}",
-                "-IC://Users//Derek//Downloads//eigen-3.4.0//eigen-3.4.0//Eigen", // Replace with the path where you extracted Eigen
+                "-IC://Users//Derek//Downloads//eigen-3.4.0//eigen-3.4.0", // Replace with the path where you extracted Eigen
                 "-o",
                 "${fileDirname}\\${fileBasenameNoExtension}.exe"
             ],
