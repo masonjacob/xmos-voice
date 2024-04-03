@@ -1,0 +1,11 @@
+{
+    "C_Cpp.default.compilerPath": "/opt/xmos/XTC/15.2.1/bin/xcc",
+    "files.associations": {
+        "*.ejs": "html",
+        "*.xc": "xc",
+        "xutility": "cpp",
+        "cstdint": "cpp",
+        "ostream": "cpp",
+        "app_conf.h": "c"
+    }
+}

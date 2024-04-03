@@ -1,7 +1,7 @@
 {
     "dockerComposeFile": "./../.docker/docker-compose.yaml",
     "service": "xmos-dev",
-	"workspaceFolder": "/home/container",
+	"workspaceFolder": "/opt/xmos",
     "customizations": {
         "vscode": {
             "extensions": [
