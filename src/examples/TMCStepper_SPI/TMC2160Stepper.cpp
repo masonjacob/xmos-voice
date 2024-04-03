@@ -10,7 +10,7 @@
 //   TMC2130Stepper(pinCS, default_RS, pinMOSI, pinMISO, pinSCK, link)
 //   { defaults(); }
 
-TMC2160Stepper::TMC2160Stepper(spi_master_device_t *dev,
+TMC2160Stepper::TMC2160Stepper(float Rsense, spi_master_device_t *dev,
                                spi_master_t *spi,
                                uint32_t cs_pin,
                                int cpol,
@@ -22,7 +22,7 @@ TMC2160Stepper::TMC2160Stepper(spi_master_device_t *dev,
                                uint32_t cs_to_clk_delay_ticks,
                                uint32_t clk_to_cs_delay_ticks,
                                uint32_t cs_to_cs_delay_ticks) :
-    TMC2130Stepper(dev, spi, cs_pin, cpol, cpha, source_clock, clock_divisor,
+    TMC2130Stepper(Rsense, dev, spi, cs_pin, cpol, cpha, source_clock, clock_divisor,
                    miso_sample_delay, miso_pad_delay, cs_to_clk_delay_ticks,
                    clk_to_cs_delay_ticks, cs_to_cs_delay_ticks) {
     defaults();

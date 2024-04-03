@@ -10,7 +10,21 @@
 #include <timer.h>
 #include <stdio.h>
 
+<<<<<<< Updated upstream
 port p = XS1_PORT_4F;
+=======
+port p = XS1_PORT_4F ;
+
+// int main(void) {
+//   while (1) {
+    p <: 10;
+//     delay_milliseconds(200);
+//     p <: 0;
+//     delay_milliseconds(200);
+//   }
+//   return 0;
+// }
+>>>>>>> Stashed changes
 
 int main(void) {
   while (1) {

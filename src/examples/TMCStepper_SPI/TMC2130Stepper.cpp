@@ -4,7 +4,7 @@
 #include <iostream>
 
 
-float RS = 0.11;
+// float RS = 0.075;
 
 //NEED TO INITIALIZE XMOS SPECIFIC CONSTANTS DOWN HERE
 
@@ -26,7 +26,7 @@ float RS = 0.11;
 //*dev represents the device, *spi is the instance already setup for SPI. CS pin represents the identity of the device
 
 
-TMC2130Stepper::TMC2130Stepper(spi_master_device_t *dev,
+TMC2130Stepper::TMC2130Stepper(float Rsense, spi_master_device_t *dev,
         spi_master_t *spi,
         uint32_t cs_pin,
         int cpol,
@@ -37,7 +37,7 @@ TMC2130Stepper::TMC2130Stepper(spi_master_device_t *dev,
         uint32_t miso_pad_delay,
         uint32_t cs_to_clk_delay_ticks,
         uint32_t clk_to_cs_delay_ticks,
-        uint32_t cs_to_cs_delay_ticks) : TMCStepper(RS), dev(dev), spi(spi), cs_pin(cs_pin) 
+        uint32_t cs_to_cs_delay_ticks) : TMCStepper(Rsense), dev(dev), spi(spi), cs_pin(cs_pin)
  
   {
     spi_master_device_init(dev,
@@ -52,6 +52,8 @@ TMC2130Stepper::TMC2130Stepper(spi_master_device_t *dev,
         cs_to_clk_delay_ticks,
         clk_to_cs_delay_ticks,
         cs_to_cs_delay_ticks);
+
+        float RS = Rsense;
 
     
   }

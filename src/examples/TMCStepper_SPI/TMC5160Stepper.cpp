@@ -13,7 +13,7 @@
 //   TMC5130Stepper(pinCS, default_RS, pinMOSI, pinMISO, pinSCK, link)
 //   { defaults(); }
 
-TMC5160Stepper::TMC5160Stepper(spi_master_device_t *dev,
+TMC5160Stepper::TMC5160Stepper(float Rsense, spi_master_device_t *dev,
         spi_master_t *spi,
         uint32_t cs_pin,
         int cpol,
@@ -25,7 +25,7 @@ TMC5160Stepper::TMC5160Stepper(spi_master_device_t *dev,
         uint32_t cs_to_clk_delay_ticks,
         uint32_t clk_to_cs_delay_ticks,
         uint32_t cs_to_cs_delay_ticks) :
-      TMC5130Stepper(dev,
+      TMC5130Stepper(Rsense, dev,
         spi,
         cs_pin,
         cpol,
