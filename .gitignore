@@ -28,7 +28,7 @@
 
 # Executables
 *.exe
-*.xe
+# *.xe
 
 # Traces
 *.gtkw
