@@ -61,12 +61,13 @@ bool stallDetected_T0 = false;
 #define WRIST_JOINT_CURRENT 800
 
 
-port_t p_miso  = XS1_PORT_1P;
-port_t p_ss = XS1_PORT_1A; //Active Low CHIP SELECT
-port_t p_sclk = XS1_PORT_1C; //SPI CLK
-port_t p_mosi = XS1_PORT_1D;
-xclock_t cb = XS1_CLKBLK_1;
-port_t led = XS1_PORT_4F;
+// port_t p_miso  = XS1_PORT_1P;
+// port_t p_ss = XS1_PORT_1A; //Active Low CHIP SELECT
+// port_t p_sclk = XS1_PORT_1C; //SPI CLK
+// port_t p_mosi = XS1_PORT_1D;
+
+// xclock_t cb = XS1_CLKBLK_1;
+// port_t led = XS1_PORT_4F;
 
 void setup_driver(TMC5160Stepper* driver, int current) 
 {
@@ -111,47 +112,76 @@ int calculateMicroSteps(double desiredAngle, double stepAngle, int stepResolutio
 
 extern KinematicPoint getKinematicPointAtoB(KinematicPoint currentkp, double desiredx, double desiredy, double desiredz);
 
+class Point {
+public:
+    double x, y, z;
+
+    Point(double x, double y, double z) : x(x), y(y), z(z) {}
+};
+
 extern "C" //SPI and Kinematics
 void main_tile0(chanend_t c)
 {
+    port_t p_mosi = XS1_PORT_1L; //X0D35 pin 8 osprey
+    port_t p_miso  = XS1_PORT_1M; //X0D36 pin 7
+    port_t p_sclk = XS1_PORT_1N; //X0D37 pin 6
+
+    xclock_t cb = XS1_CLKBLK_1;
+    port_t led = XS1_PORT_4F;
+
+
     //Setup all the drivers and SPI contexts
-    port_t DUMMYFORTESTING = XS1_PORT_1L;
-    spi_master_t SHOULDER_SWIVEL_SPI_CTX, SHOULDER_JOINT_SPI_CTX, ELBOW_JOINT_SPI_CTX, WRIST_SWIVEL_SPI_CTX, WRIST_JOINT_SPI_CTX;
+    port_t DUMMYFORTESTING = XS1_PORT_1B;
+
+    spi_master_t SHOULDER_SWIVEL_SPI_CTX, SHOULDER_JOINT_SPI_CTX1, SHOULDER_JOINT_SPI_CTX2, ELBOW_JOINT_SPI_CTX, WRIST_SWIVEL_SPI_CTX, WRIST_JOINT_SPI_CTX;
 
     // port_t SHOULDER_SWIVEL_CS = XS1_PORT_1N; //X0D37 I2C_SCL, pin 5 on expansion header
-    port_t SHOULDER_SWIVEL_CS = DUMMYFORTESTING;
+    port_t SHOULDER_SWIVEL_CS = XS1_PORT_1O; //Osprey X0D38 pin 5
     spi_master_init(&SHOULDER_SWIVEL_SPI_CTX, cb, SHOULDER_SWIVEL_CS, p_sclk, p_mosi, p_miso);
 
-    port_t SHOULDER_JOINT_CS = DUMMYFORTESTING;
-    spi_master_init(&SHOULDER_JOINT_SPI_CTX, cb, SHOULDER_JOINT_CS, p_sclk, p_mosi, p_miso);
+    port_t SHOULDER_JOINT_CS1 = XS1_PORT_1P; //pin 3
+    spi_master_init(&SHOULDER_JOINT_SPI_CTX1, cb, SHOULDER_JOINT_CS1, p_sclk, p_mosi, p_miso);
     
+    port_t SHOULDER_JOINT_CS2 = XS1_PORT_1A; //PIN 12
+    spi_master_init(&SHOULDER_JOINT_SPI_CTX2, cb, SHOULDER_JOINT_CS2, p_sclk, p_mosi, p_miso);
+
     //Normal CS, Driver 1
-    // port_t ELBOW_JOINT_CS = p_ss;
-    spi_master_init(&ELBOW_JOINT_SPI_CTX, cb, p_ss, p_sclk, p_mosi, p_miso);
+    port_t ELBOW_JOINT_CS = DUMMYFORTESTING;
+    spi_master_init(&ELBOW_JOINT_SPI_CTX, cb, ELBOW_JOINT_CS, p_sclk, p_mosi, p_miso);
 
     //2nd driver CS
-    port_t WRIST_SWIVEL_CS = XS1_PORT_1O; //X0D38, I2C_SDA, pin 3 on expansion header
+    // port_t WRIST_SWIVEL_CS = XS1_PORT_1O; //X0D38, I2C_SDA, pin 3 on expansion header
+    port_t WRIST_SWIVEL_CS = DUMMYFORTESTING; 
     spi_master_init(&WRIST_SWIVEL_SPI_CTX, cb, WRIST_SWIVEL_CS, p_sclk, p_mosi, p_miso); //WRIST SWIVEL is using normal CS on header
 
-    port_t WRIST_JOINT_CS = XS1_PORT_1N; //X0D37 I2C_SCL, pin 5 on expansion header
+    // port_t WRIST_JOINT_CS = XS1_PORT_1N; //X0D37 I2C_SCL, pin 5 on expansion header
+    port_t WRIST_JOINT_CS = DUMMYFORTESTING;
     //3rd driver CS
     spi_master_init(&WRIST_JOINT_SPI_CTX, cb, WRIST_JOINT_CS, p_sclk, p_mosi, p_miso);
 
-    spi_master_device_t spi_device_SHOULDER_SWIVEL, spi_device_SHOULDER_JOINT, spi_device_ELBOW_JOINT, spi_device_WRIST_SWIVEL, spi_device_WRIST_JOINT;
+    spi_master_device_t spi_device_SHOULDER_SWIVEL, spi_device_SHOULDER_JOINT1, spi_device_SHOULDER_JOINT2, spi_device_ELBOW_JOINT, spi_device_WRIST_SWIVEL, spi_device_WRIST_JOINT;
 
     TMC5160Stepper* SHOULDER_SWIVEL_DRIVER = new TMC5160Stepper(Rsense, &spi_device_SHOULDER_SWIVEL, &SHOULDER_SWIVEL_SPI_CTX,
         0, //Chip Select bit number
         1, 1,  //cpol, cpha
         spi_master_source_clock_xcore,
-        75, //Was 75 600Mhz/(4 * 75) = 2MHz
+        150, //Was 75 600Mhz/(4 * 75) = 2MHz
         spi_master_sample_delay_0,
         0, 0 ,0 ,0);
 
-    TMC5160Stepper* SHOULDER_JOINT_DRIVER = new TMC5160Stepper(Rsense, &spi_device_SHOULDER_JOINT, &SHOULDER_JOINT_SPI_CTX,
+    TMC5160Stepper* SHOULDER_JOINT_DRIVER1 = new TMC5160Stepper(Rsense, &spi_device_SHOULDER_JOINT1, &SHOULDER_JOINT_SPI_CTX1,
         0, //Chip Select bit number
         1, 1,  //cpol, cpha
         spi_master_source_clock_xcore,
-        75, //Was 75 600Mhz/(4 * 75) = 2MHz
+        150, //Was 75 600Mhz/(4 * 75) = 2MHz
+        spi_master_sample_delay_0,
+        0, 0 ,0 ,0);
+
+    TMC5160Stepper* SHOULDER_JOINT_DRIVER2 = new TMC5160Stepper(Rsense, &spi_device_SHOULDER_JOINT2, &SHOULDER_JOINT_SPI_CTX2,
+        0, //Chip Select bit number
+        1, 1,  //cpol, cpha
+        spi_master_source_clock_xcore,
+        150, //Was 75 600Mhz/(4 * 75) = 2MHz
         spi_master_sample_delay_0,
         0, 0 ,0 ,0);
 
@@ -180,7 +210,8 @@ void main_tile0(chanend_t c)
         0, 0 ,0 ,0);
 
     setup_driver(SHOULDER_SWIVEL_DRIVER, SHOULDER_SWIVEL_CURRENT);
-    setup_driver(SHOULDER_JOINT_DRIVER, SHOULDER_JOINT_CURRENT); 
+    setup_driver(SHOULDER_JOINT_DRIVER1, SHOULDER_JOINT_CURRENT);
+    setup_driver(SHOULDER_JOINT_DRIVER2, SHOULDER_JOINT_CURRENT);
     setup_driver(ELBOW_JOINT_DRIVER, ELBOW_JOINT_CURRENT); 
     setup_driver(WRIST_SWIVEL_DRIVER, WRIST_SWIVEL_CURRENT);
     setup_driver(WRIST_JOINT_DRIVER, WRIST_JOINT_CURRENT);
@@ -193,11 +224,94 @@ void main_tile0(chanend_t c)
 
     double SHOULDER_SWIVEL_ANGLE_TO_MOVE, SHOULDER_JOINT_ANGLE_TO_MOVE, ELBOW_JOINT_ANGLE_TO_MOVE, WRIST_SWIVEL_ANGLE_TO_MOVE, WRIST_JOINT_ANGLE_TO_MOVE;
 
+    // port_t p_bit3 = XS1_PORT_1D;
+    // port_t p_bit2 = XS1_PORT_1D;
+    // port_t p_bit1 = XS1_PORT_1D;
+    // port_t p_bit0 = XS1_PORT_1D;
+    // port_enable(p_bit3);
+    // port_enable(p_bit2);
+    // port_enable(p_bit1);
+    // port_enable(p_bit0);
+
+    int bit3, bit2, bit1, bit0;
+    int word_id_from_voice;
+
+    #define ASR_NUMBER_OF_COMMANDS  (17)
+
+        typedef struct asr_lut_struct
+    {
+        int     asr_id;    // ASR response IDs
+        const char* text;  // String output
+        Point points[5];
+    } asr_lut_t;
+
+        static asr_lut_t asr_lut[ASR_NUMBER_OF_COMMANDS] = {
+        {1, "Switch on the TV", {{1.0, 1.0, 1.0}}},
+        {2, "Channel up", {{0.0, 0.0, 0.0}}},  // Example values, adjust accordingly
+        {3, "Channel down", {{0.0, 0.0, 0.0}}},
+        {4, "Volume up", {{0.0, 0.0, 0.0}}},
+        {5, "Volume down", {{0.0, 0.0, 0.0}}},
+        {6, "Switch off the TV", {{0.0, 0.0, 0.0}}},
+        {7, "Switch on the lights", {{0.0, 0.0, 0.0}}},
+        {8, "Brightness up", {{0.0, 0.0, 0.0}}},
+        {9, "Brightness down", {{0.0, 0.0, 0.0}}},
+        {10, "Switch off the lights", {{0.0, 0.0, 0.0}}},
+        {11, "Switch on the fan", {{0.0, 0.0, 0.0}}},
+        {12, "Speed up the fan", {{0.0, 0.0, 0.0}}},
+        {13, "Slow down the fan", {{0.0, 0.0, 0.0}}},
+        {14, "Set higher temperature", {{0.0, 0.0, 0.0}}},
+        {15, "Set lower temperature", {{0.0, 0.0, 0.0}}},
+        {16, "Switch off the fan", {{0.0, 0.0, 0.0}}},
+        {17, "Hello XMOS", {{0.0, 0.0, 0.0}}}
+    };
+
+    //Starts in upright position. 0.811 is the the highest it can reach.
+
+    KinematicPoint currentkp = KinematicPoint(0, 0, 0, 0, 0, 0, 0, 0.811624);
+
+    // KinematicPoint nextkp = getKinematicPointAtoB(currentkp, nextx, nexty, nextz);
+
+
     while(1) //Voice Control, Kinematics, Stall checks
     {
 
-        //Wait for voice commands, then generate kinematics to get us there
+        //Wait for voice command
+        while(1)
+        {
+            bit3 = port_in(p_bit3);
+            bit2 = port_in(p_bit2);
+            bit1 = port_in(p_bit1);
+            bit0 = port_in(p_bit0);
 
+            word_id_from_voice = (bit3 << 3) | (bit2 << 2) | (bit1 << 1) | (bit0);
+
+            if(word_id_from_voice != 0)
+            {
+                const char* text = "";
+                Point* points = nullptr;
+
+                for (int i=0; i<ASR_NUMBER_OF_COMMANDS; i++) 
+                {
+                    if (asr_lut[i].asr_id == word_id_from_voice) 
+                    {
+                        text = asr_lut[i].text;
+                        points = asr_lut[i].points;
+                    }
+                }
+
+                break; //Start kinematics with defined points array
+            }
+
+            delay_milliseconds(100);
+        }
+
+
+
+        for (int j = 0; j < 5; j++) 
+        {
+            
+        }
+        
         //nextz must be greater than board to shoulder which is 0.23150
 
         // double currentx = 0, currenty = 0, currentz = 0.811624;
@@ -267,6 +381,9 @@ void main_tile0(chanend_t c)
         // WRIST_SWIVEL_ANGLE_TO_MOVE = wristSwiv[posInArray];
         // WRIST_JOINT_ANGLE_TO_MOVE = wristJoint[posInArray];
 
+        
+        SHOULDER_SWIVEL_ANGLE_TO_MOVE = 15;
+        SHOULDER_JOINT_ANGLE_TO_MOVE = 0;
         ELBOW_JOINT_ANGLE_TO_MOVE = 0;
         WRIST_SWIVEL_ANGLE_TO_MOVE = 30;
         WRIST_JOINT_ANGLE_TO_MOVE = 15;
@@ -279,11 +396,17 @@ void main_tile0(chanend_t c)
         else
             SHOULDER_SWIVEL_DRIVER->shaft(true);
 
-        if(SHOULDER_JOINT_ANGLE_TO_MOVE < 0)  //Checking if we need to change direction
-            SHOULDER_JOINT_DRIVER->shaft(false); //false being left, true being right
+        if(SHOULDER_JOINT_ANGLE_TO_MOVE < 0)
+        {
+            SHOULDER_JOINT_DRIVER1->shaft(false); //false being left, true being right
+            SHOULDER_JOINT_DRIVER2->shaft(false); //false being left, true being right
+        }  //Checking if we need to change direction
         else
-            SHOULDER_JOINT_DRIVER->shaft(true);
-
+        {
+            SHOULDER_JOINT_DRIVER1->shaft(true);
+            SHOULDER_JOINT_DRIVER2->shaft(true);
+        }
+            
         if(ELBOW_JOINT_ANGLE_TO_MOVE < 0)  //Checking if we need to change direction
             ELBOW_JOINT_DRIVER->shaft(false); //false being left, true being right
         else
@@ -302,11 +425,11 @@ void main_tile0(chanend_t c)
         std::cout << ELBOW_JOINT_ANGLE_TO_MOVE << std::endl;
 
         //MICRO ONLY
-        // SHOULDER_SWIVEL_MICRO_STEPS = calculateMicroSteps(abs(SHOULDER_SWIVEL_ANGLE_TO_MOVE), SHOULDER_SWIVEL_ANGLE_TO_STEP_COEFFICIENT, stepResolution);
-        // SHOULDER_JOINT_MICRO_STEPS = calculateMicroSteps(abs(SHOULDER_JOINT_ANGLE_TO_MOVE), SHOULDER_JOINT_ANGLE_TO_STEP_COEFFICIENT, stepResolution);
+        SHOULDER_SWIVEL_MICRO_STEPS = calculateMicroSteps(abs(SHOULDER_SWIVEL_ANGLE_TO_MOVE), SHOULDER_SWIVEL_ANGLE_TO_STEP_COEFFICIENT, stepResolution);
+        SHOULDER_JOINT_MICRO_STEPS = calculateMicroSteps(abs(SHOULDER_JOINT_ANGLE_TO_MOVE), SHOULDER_JOINT_ANGLE_TO_STEP_COEFFICIENT, stepResolution);
         ELBOW_JOINT_MICRO_STEPS = calculateMicroSteps(abs(ELBOW_JOINT_ANGLE_TO_MOVE), ELBOW_JOINT_ANGLE_TO_STEP_COEFFICIENT, stepResolution);
-        WRIST_SWIVEL_MICRO_STEPS = calculateMicroSteps(abs(WRIST_SWIVEL_ANGLE_TO_MOVE), WRIST_SWIVEL_ANGLE_TO_STEP_COEFFICIENT, stepResolution);
-        WRIST_JOINT_MICRO_STEPS = calculateMicroSteps(abs(WRIST_JOINT_ANGLE_TO_MOVE), WRIST_JOINT_ANGLE_TO_STEP_COEFFICIENT, stepResolution);
+        // WRIST_SWIVEL_MICRO_STEPS = calculateMicroSteps(abs(WRIST_SWIVEL_ANGLE_TO_MOVE), WRIST_SWIVEL_ANGLE_TO_STEP_COEFFICIENT, stepResolution);
+        // WRIST_JOINT_MICRO_STEPS = calculateMicroSteps(abs(WRIST_JOINT_ANGLE_TO_MOVE), WRIST_JOINT_ANGLE_TO_STEP_COEFFICIENT, stepResolution);
 
         // std::cout << "ELBOW JOINT Full " << ELBOW_JOINT_MICRO_STEPS << std::endl;
         // std::cout << "Shoulder Swivel Full " << SHOULDER_SWIVEL_MICRO_STEPS << std::endl;
@@ -322,12 +445,12 @@ void main_tile0(chanend_t c)
         // chan_out_word(c, WRIST_SWIVEL_FULL_STEPS);
         // chan_out_word(c, WRIST_JOINT_FULL_STEPS);
 
-        // chan_out_word(c, SHOULDER_SWIVEL_MICRO_STEPS);
-        // chan_out_word(c, SHOULDER_JOINT_MICRO_STEPS);
+        chan_out_word(c, SHOULDER_SWIVEL_MICRO_STEPS);
+        chan_out_word(c, SHOULDER_JOINT_MICRO_STEPS);
 
-        chan_out_word(c, ELBOW_JOINT_MICRO_STEPS);
-        chan_out_word(c, WRIST_SWIVEL_MICRO_STEPS);
-        chan_out_word(c, WRIST_JOINT_MICRO_STEPS);
+        // chan_out_word(c, ELBOW_JOINT_MICRO_STEPS);
+        // chan_out_word(c, WRIST_SWIVEL_MICRO_STEPS);
+        // chan_out_word(c, WRIST_JOINT_MICRO_STEPS);
 
         int fromTile1;
 
@@ -339,10 +462,12 @@ void main_tile0(chanend_t c)
             // std::cout << "sg_result " << SHOULDER_SWIVEL_DRIVER->sg_result() << std::endl;
             // std::cout << "stall flag " << SHOULDER_SWIVEL_DRIVER->stallguard() << std::endl;
 
-            if(SHOULDER_SWIVEL_DRIVER->stallguard())
-            {
-                stallDetected_T0 = true;
-            } 
+            // if(SHOULDER_SWIVEL_DRIVER->stallguard())
+            // {
+            //     stallDetected_T0 = true;
+            // } 
+
+            std::cout << SHOULDER_SWIVEL_DRIVER->DRV_STATUS() << std::endl;
 
             // if(SHOULDER_JOINT_DRIVER->stallguard())
             // {
@@ -403,72 +528,5 @@ void main_tile0(chanend_t c)
         return;
 
     }
-
-
-    // else
-    //  {
-
-    //     std::cout << "Starting MicroSteps" << std::endl;
-
-    //     chan_out_word(c, SHOULDER_SWIVEL_MICRO_STEPS);
-    //     // chan_out_word(c, SHOULDER_JOINT_MICRO_STEPS);
-    //     // chan_out_word(c, ELBOW_JOINT_MICRO_STEPS);
-    //     chan_out_word(c, WRIST_SWIVEL_MICRO_STEPS);
-    //     // chan_out_word(c, WRIST_JOINT_MICRO_STEPS);
-
-
-    //     while(1)
-    //     {       
-    //         if(SHOULDER_SWIVEL_DRIVER->stallguard())
-    //         {
-    //             stallDetected_T0 = true;
-    //         } 
-
-    //         // if(SHOULDER_JOINT_DRIVER->stallguard())
-    //         // {
-    //         //     stallDetected_T0 = true;
-    //         // }
-
-    //         // if(ELBOW_JOINT_DRIVER->stallguard())
-    //         // {
-    //         //     stallDetected_T0 = true;
-    //         // }
-
-    //         if(WRIST_SWIVEL_DRIVER->XTARGET())
-    //         {
-    //             stallDetected_T0 = true;
-    //         }
-
-    //         // if(WRIST_JOINT_DRIVER->XTARGET()) //There's no reason to check stall if were done
-    //         // {
-    //         //     stallDetected_T0 = true;
-    //         // }
-
-    //         if(stallDetected_T0)
-    //         {
-    //             printf("Stalled\n");
-    //             chan_out_word(c, STALLED_T0);
-    //             break;
-    //         }
-    //         else
-    //         {
-    //             chan_out_word(c, NOSTALL_T0);
-    //         }
-
-    //         uint32_t fromTile1 = chan_in_word(c);
-
-    //         std::cout << "On tile 0, received from tile 1 "<<std::hex << fromTile1 << std::endl;
-
-
-    //         if(fromTile1 == DONE_STATUS_T0)
-    //         {   
-    //             // printf("All waves finished\n");
-    //             break;
-    //         }
-            
-    //     }
-
-    // }
-
 
 }

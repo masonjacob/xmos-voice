@@ -6,7 +6,7 @@
 3. Add the buildhost to path (```PATH=$PATH:/opt/xmos/bin```)
 4. Use  ```nibble_swap <model>-net.bin <model>-net.bin.nibble_swap``` to create the nibble_swap files for both the command set and wake word
 
-## ffd
+make## ffd
 1. Drop the model files into the model folder (you can make your own subfolder, by default the .cmake looks in "usa-english")
 2. Create a dummy folder with the same name as the one you put the model files in and put that folder in the ```filesystem_support``` folder, and fill it with the example output audio files (this is because the example wants output tasks to exist for some reason) 
 3. Modify the ffd_sensory.cmake so that the ```set(SENSORY_COMMAND_SEARCH_HEADER_FILE...``` and other file references are correct, based on the folder you just put the model in. (Make sure that the "dev" or "prod" and the version number e.g. 7.0.0 is correct with the names of your model files)

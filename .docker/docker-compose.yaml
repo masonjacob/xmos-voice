@@ -3,7 +3,7 @@ services:
   xmos-dev:
     image: masonjacob/xmos-dev:latest
     # image: ghcr.io/xmos/xcore_builder:v3
-    entrypoint: /opt/xmos/xmos-vocal-motion/.docker/entrypoint.sh
+    # entrypoint: /opt/xmos/xmos-vocal-motion/.docker/entrypoint.sh
     command: "sleep inf"
     volumes:
       - ./../:/opt/xmos/xmos-vocal-motion
