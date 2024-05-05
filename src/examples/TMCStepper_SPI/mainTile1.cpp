@@ -146,6 +146,27 @@ void parStepsControlLoop(chanend_t tileToTile)
     return;
 }
 
+#define SHOULDER_SWIVEL_BELT_RATIO 10
+#define SHOULDER_SWIVEL_ANGLE_TO_STEP_COEFFICIENT (1.8 / SHOULDER_SWIVEL_BELT_RATIO)
+#define SHOULDER_SWIVEL_CURRENT 2000
+
+#define SHOULDER_JOINT_BELT_RATIO 5.5
+#define SHOULDER_JOINT_ANGLE_TO_STEP_COEFFICIENT (1.8 / SHOULDER_JOINT_BELT_RATIO)
+#define SHOULDER_JOINT_CURRENT 3000
+
+#define ELBOW_JOINT_BELT_RATIO 22.2 //60:14 for belt, 5.18:1 for the gearbox stepper itself
+#define ELBOW_JOINT_ANGLE_TO_STEP_COEFFICIENT (1.8 / ELBOW_JOINT_BELT_RATIO)
+#define ELBOW_JOINT_CURRENT 1680
+
+#define WRIST_SWIVEL_BELT_RATIO 1 
+#define WRIST_SWIVEL_ANGLE_TO_STEP_COEFFICIENT (1.8 / WRIST_SWIVEL_BELT_RATIO)
+#define WRIST_SWIVEL_CURRENT 400
+
+#define WRIST_JOINT_BELT_RATIO 4.5
+#define WRIST_JOINT_ANGLE_TO_STEP_COEFFICIENT (1.8 / WRIST_JOINT_BELT_RATIO)
+#define WRIST_JOINT_CURRENT 800
+
+
 extern "C" //Step Pin Generation
 void main_tile1(chanend_t c)
 {           
@@ -159,10 +180,13 @@ void main_tile1(chanend_t c)
         // port_enable(WRIST_SWIVEL_STEP_PIN); //I2S_LCRK pin 
         // port_enable(WRIST_JOINT_STEP_PIN); //I2S_DIN pin 40
 
-        int stepDelay = 200; //In microseconds
-        int elbowStepDelay = 400;
-        int wristSwivelStepDelay = 400;
-        int wristJointStepDelay = 400;
+        int stepDelay = 5000; //In microseconds
+
+        int shoulderswivelStepDelay = stepDelay / SHOULDER_SWIVEL_BELT_RATIO;
+        int shoulderjointStepDelay = stepDelay / SHOULDER_JOINT_BELT_RATIO;
+        int elbowStepSDelay = stepDelay / ELBOW_JOINT_BELT_RATIO;
+        int wristSwivelStepDelay = stepDelay / WRIST_SWIVEL_BELT_RATIO;
+        int wristJointStepDelay = stepDelay / WRIST_JOINT_BELT_RATIO;
         
         int SHOULDER_SWIVEL_FULL_STEPS = chan_in_word(c);
         int SHOULDER_JOINT_FULL_STEPS = chan_in_word(c);
@@ -173,8 +197,8 @@ void main_tile1(chanend_t c)
         PAR_JOBS( //Step pin wave generatorion with control
             PJOB(parStepsControlLoop, (c)),
             
-            PJOB(parWavegen, (SHOULDER_SWIVEL_STEP_PIN, SHOULDER_SWIVEL_FULL_STEPS, stepDelay, DONE0)), //make sure to seperate PJOB by a ","
-            PJOB(parWavegen, (SHOULDER_JOINT_STEP_PIN, SHOULDER_JOINT_FULL_STEPS, stepDelay, DONE1))
+            PJOB(parWavegen, (SHOULDER_SWIVEL_STEP_PIN, SHOULDER_SWIVEL_FULL_STEPS, shoulderswivelStepDelay, DONE0)), //make sure to seperate PJOB by a ","
+            PJOB(parWavegen, (SHOULDER_JOINT_STEP_PIN, SHOULDER_JOINT_FULL_STEPS, shoulderjointStepDelay, DONE1))
             // PJOB(parWavegen, (ELBOW_JOINT_STEP_PIN, ELBOW_JOINT_FULL_STEPS, elbowStepDelay, DONE2 )), //make sure to seperate PJOB by a ","
             // PJOB(parWavegen, (WRIST_SWIVEL_STEP_PIN, WRIST_SWIVEL_FULL_STEPS, wristSwivelStepDelay, DONE3)), //make sure to seperate PJOB by a ","
             // PJOB(parWavegen, (WRIST_JOINT_STEP_PIN,  WRIST_JOINT_FULL_STEPS, wristJointStepDelay, DONE4))

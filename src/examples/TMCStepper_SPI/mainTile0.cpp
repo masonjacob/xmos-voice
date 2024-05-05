@@ -48,8 +48,8 @@ bool stallDetected_T0 = false;
 #define SHOULDER_JOINT_ANGLE_TO_STEP_COEFFICIENT (1.8 / SHOULDER_JOINT_BELT_RATIO)
 #define SHOULDER_JOINT_CURRENT 3000
 
-#define ELBOW_JOINT_BELT_RATIO 22.2
-#define ELBOW_JOINT_ANGLE_TO_STEP_COEFFICIENT (0.35 / ELBOW_JOINT_BELT_RATIO)
+#define ELBOW_JOINT_BELT_RATIO 22.2 //60:14 for belt, 5.18:1 for the gearbox stepper itself
+#define ELBOW_JOINT_ANGLE_TO_STEP_COEFFICIENT (1.8 / ELBOW_JOINT_BELT_RATIO)
 #define ELBOW_JOINT_CURRENT 1680
 
 #define WRIST_SWIVEL_BELT_RATIO 1 
@@ -110,7 +110,8 @@ int calculateMicroSteps(double desiredAngle, double stepAngle, int stepResolutio
     return static_cast<int>(std::round(preciseMicrosteps));
 }
 
-extern KinematicPoint getKinematicPointAtoB(KinematicPoint currentkp, double desiredx, double desiredy, double desiredz);
+extern KinematicPoint getSimpleKinematics(double desiredx, double desiredy, double desiredz);
+
 
 class Point {
 public:
@@ -269,11 +270,10 @@ void main_tile0(chanend_t c)
 
     KinematicPoint currentkp = KinematicPoint(0, 0, 0, 0, 0, 0, 0, 0.811624);
 
-    // KinematicPoint nextkp = getKinematicPointAtoB(currentkp, nextx, nexty, nextz);
-
-
     while(1) //Voice Control, Kinematics, Stall checks
     {
+
+        Point* points = nullptr;
 
         //Wait for voice command
         while(1)
@@ -288,7 +288,6 @@ void main_tile0(chanend_t c)
             if(word_id_from_voice != 0)
             {
                 const char* text = "";
-                Point* points = nullptr;
 
                 for (int i=0; i<ASR_NUMBER_OF_COMMANDS; i++) 
                 {
@@ -309,224 +308,157 @@ void main_tile0(chanend_t c)
 
         for (int j = 0; j < 5; j++) 
         {
-            
-        }
-        
-        //nextz must be greater than board to shoulder which is 0.23150
+            KinematicPoint nextkp = getSimpleKinematics(points[j].x, points[j].y, points[j].z);
 
-        // double currentx = 0, currenty = 0, currentz = 0.811624;
-        // double nextx = -0.122, nexty = 0.002, nextz = 0.297;
-        // double S1angle = 0, J1angle = 0, J2angle = 0, J3angle = 0, S3angle = 0;
-
-        // KinematicPoint currentkp = KinematicPoint(S1angle, J1angle, J2angle, J3angle, S3angle, currentx, currenty, currentz);
-
-        // KinematicPoint nextkp = getKinematicPointAtoB(currentkp, nextx, nexty, nextz);
-
-        // //Bad Request Handling
-        // if(nextkp.getX() == 7 && nextkp.getY() == 7 && nextkp.getZ() == 7)
-        // {
-        //     continue; //If we get a bad kinematic request, we go back to top of loop and skip execution and await voice commands again
-        // }
-
-        // double SHOULDER_SWIVEL_ANGLE_TO_MOVE = currentkp.getAngle1() - nextkp.getAngle1();
-        // double SHOULDER_JOINT_ANGLE_TO_MOVE = currentkp.getAngle2() - nextkp.getAngle2();
-        // double ELBOW_JOINT_ANGLE_TO_MOVE = currentkp.getAngle3() - nextkp.getAngle3();
-        // double WRIST_SWIVEL_ANGLE_TO_MOVE = currentkp.getAngle4() - nextkp.getAngle4();
-        // double WRIST_JOINT_ANGLE_TO_MOVE = currentkp.getAngle5() - nextkp.getAngle5();
-
-        // //FIX ME AND MAKE SURE DIRECTIONS MATCH
-        // if(SHOULDER_SWIVEL_ANGLE_TO_MOVE < 0)  //Checking if we need to change direction
-        //     SHOULDER_SWIVEL_DRIVER->shaft(false); //false being left, true being right
-        // else
-        //     SHOULDER_SWIVEL_DRIVER->shaft(true);
-
-        // if(SHOULDER_JOINT_ANGLE_TO_MOVE < 0)  //Checking if we need to change direction
-        //     SHOULDER_JOINT_DRIVER->shaft(false); //false being left, true being right
-        // else
-        //     SHOULDER_JOINT_DRIVER->shaft(true);
-
-        // if(ELBOW_JOINT_ANGLE_TO_MOVE < 0)  //Checking if we need to change direction
-        //     ELBOW_JOINT_DRIVER->shaft(false); //false being left, true being right
-        // else
-        //     ELBOW_JOINT_DRIVER->shaft(true);
-
-        // if(WRIST_SWIVEL_ANGLE_TO_MOVE < 0)  //Checking if we need to change direction
-        //     WRIST_SWIVEL_DRIVER->shaft(false); //false being left, true being right
-        // else
-        //     WRIST_SWIVEL_DRIVER->shaft(true);
-
-        // if(WRIST_JOINT_ANGLE_TO_MOVE < 0)  //Checking if we need to change direction
-        //     WRIST_JOINT_DRIVER->shaft(false); //false being left, true being right
-        // else
-        //     WRIST_JOINT_DRIVER->shaft(true);
-
-        
-        int SHOULDER_SWIVEL_FULL_STEPS, SHOULDER_JOINT_FULL_STEPS, ELBOW_JOINT_FULL_STEPS, WRIST_SWIVEL_FULL_STEPS, WRIST_JOINT_FULL_STEPS;
-        int SHOULDER_SWIVEL_MICRO_STEPS, SHOULDER_JOINT_MICRO_STEPS, ELBOW_JOINT_MICRO_STEPS, WRIST_SWIVEL_MICRO_STEPS, WRIST_JOINT_MICRO_STEPS;
-
-        int stepResolution = 16; 
-
-        //FULL and MICRO CODE
-        // calculateSteps(SHOULDER_SWIVEL_ANGLE, SHOULDER_SWIVEL_ANGLE_TO_STEP_COEFFICIENT, stepResolution, SHOULDER_SWIVEL_FULL_STEPS, SHOULDER_SWIVEL_MICRO_STEPS);
-        // // calculateSteps(SHOULDER_JOINT_ANGLE, SHOULDER_JOINT_ANGLE_TO_STEP_COEFFICIENT, stepResolution, SHOULDER_JOINT_FULL_STEPS, SHOULDER_JOINT_MICRO_STEPS);
-        // // calculateSteps(ELBOW_JOINT_ANGLE, ELBOW_JOINT_ANGLE_TO_STEP_COEFFICIENT, stepResolution, ELBOW_JOINT_FULL_STEPS, ELBOW_JOINT_MICRO_STEPS);
-        // calculateSteps(WRIST_SWIVEL_ANGLE, WRIST_SWIVEL_ANGLE_TO_STEP_COEFFICIENT, stepResolution, WRIST_SWIVEL_FULL_STEPS, WRIST_SWIVEL_MICRO_STEPS);
-        // // calculateSteps(WRIST_JOINT_ANGLE, WRIST_JOINT_ANGLE_TO_STEP_COEFFICIENT, stepResolution, WRIST_JOINT_FULL_STEPS, WRIST_JOINT_MICRO_STEPS);
-        
-
-        // if(posInArray >= 5)
-        //         posInArray = 0;
-
-        // ELBOW_JOINT_ANGLE_TO_MOVE = elbow[posInArray];
-        // WRIST_SWIVEL_ANGLE_TO_MOVE = wristSwiv[posInArray];
-        // WRIST_JOINT_ANGLE_TO_MOVE = wristJoint[posInArray];
-
-        
-        SHOULDER_SWIVEL_ANGLE_TO_MOVE = 15;
-        SHOULDER_JOINT_ANGLE_TO_MOVE = 0;
-        ELBOW_JOINT_ANGLE_TO_MOVE = 0;
-        WRIST_SWIVEL_ANGLE_TO_MOVE = 30;
-        WRIST_JOINT_ANGLE_TO_MOVE = 15;
-
-        // posInArray += 1;
-
-        //FIX ME AND MAKE SURE DIRECTIONS MATCH
-        if(SHOULDER_SWIVEL_ANGLE_TO_MOVE < 0)  //Checking if we need to change direction
-            SHOULDER_SWIVEL_DRIVER->shaft(false); //false being left, true being right
-        else
-            SHOULDER_SWIVEL_DRIVER->shaft(true);
-
-        if(SHOULDER_JOINT_ANGLE_TO_MOVE < 0)
-        {
-            SHOULDER_JOINT_DRIVER1->shaft(false); //false being left, true being right
-            SHOULDER_JOINT_DRIVER2->shaft(false); //false being left, true being right
-        }  //Checking if we need to change direction
-        else
-        {
-            SHOULDER_JOINT_DRIVER1->shaft(true);
-            SHOULDER_JOINT_DRIVER2->shaft(true);
-        }
-            
-        if(ELBOW_JOINT_ANGLE_TO_MOVE < 0)  //Checking if we need to change direction
-            ELBOW_JOINT_DRIVER->shaft(false); //false being left, true being right
-        else
-            ELBOW_JOINT_DRIVER->shaft(true);
-
-        if(WRIST_SWIVEL_ANGLE_TO_MOVE < 0)  //Checking if we need to change direction
-            WRIST_SWIVEL_DRIVER->shaft(false); //false being left, true being right
-        else
-            WRIST_SWIVEL_DRIVER->shaft(true);
-
-        if(WRIST_JOINT_ANGLE_TO_MOVE < 0)  //Checking if we need to change direction
-            WRIST_JOINT_DRIVER->shaft(false); //false being left, true being right
-        else
-            WRIST_JOINT_DRIVER->shaft(true);
-
-        std::cout << ELBOW_JOINT_ANGLE_TO_MOVE << std::endl;
-
-        //MICRO ONLY
-        SHOULDER_SWIVEL_MICRO_STEPS = calculateMicroSteps(abs(SHOULDER_SWIVEL_ANGLE_TO_MOVE), SHOULDER_SWIVEL_ANGLE_TO_STEP_COEFFICIENT, stepResolution);
-        SHOULDER_JOINT_MICRO_STEPS = calculateMicroSteps(abs(SHOULDER_JOINT_ANGLE_TO_MOVE), SHOULDER_JOINT_ANGLE_TO_STEP_COEFFICIENT, stepResolution);
-        ELBOW_JOINT_MICRO_STEPS = calculateMicroSteps(abs(ELBOW_JOINT_ANGLE_TO_MOVE), ELBOW_JOINT_ANGLE_TO_STEP_COEFFICIENT, stepResolution);
-        // WRIST_SWIVEL_MICRO_STEPS = calculateMicroSteps(abs(WRIST_SWIVEL_ANGLE_TO_MOVE), WRIST_SWIVEL_ANGLE_TO_STEP_COEFFICIENT, stepResolution);
-        // WRIST_JOINT_MICRO_STEPS = calculateMicroSteps(abs(WRIST_JOINT_ANGLE_TO_MOVE), WRIST_JOINT_ANGLE_TO_STEP_COEFFICIENT, stepResolution);
-
-        // std::cout << "ELBOW JOINT Full " << ELBOW_JOINT_MICRO_STEPS << std::endl;
-        // std::cout << "Shoulder Swivel Full " << SHOULDER_SWIVEL_MICRO_STEPS << std::endl;
-
-        std::cout << "Beginning Full Steps" << std::endl;
-
-        std::cout << ELBOW_JOINT_MICRO_STEPS << std::endl;
-
-
-        // chan_out_word(c, SHOULDER_SWIVEL_FULL_STEPS);
-        // chan_out_word(c, SHOULDER_JOINT_FULL_STEPS);
-        // chan_out_word(c, ELBOW_JOINT_FULL_STEPS);
-        // chan_out_word(c, WRIST_SWIVEL_FULL_STEPS);
-        // chan_out_word(c, WRIST_JOINT_FULL_STEPS);
-
-        chan_out_word(c, SHOULDER_SWIVEL_MICRO_STEPS);
-        chan_out_word(c, SHOULDER_JOINT_MICRO_STEPS);
-
-        // chan_out_word(c, ELBOW_JOINT_MICRO_STEPS);
-        // chan_out_word(c, WRIST_SWIVEL_MICRO_STEPS);
-        // chan_out_word(c, WRIST_JOINT_MICRO_STEPS);
-
-        int fromTile1;
-
-        // delay_microseconds_cpp(100000); //Wait a moment for steps to get started or the stall will get detected immediately
-
-        while(1)
-        {       
-
-            // std::cout << "sg_result " << SHOULDER_SWIVEL_DRIVER->sg_result() << std::endl;
-            // std::cout << "stall flag " << SHOULDER_SWIVEL_DRIVER->stallguard() << std::endl;
-
-            // if(SHOULDER_SWIVEL_DRIVER->stallguard())
-            // {
-            //     stallDetected_T0 = true;
-            // } 
-
-            std::cout << SHOULDER_SWIVEL_DRIVER->DRV_STATUS() << std::endl;
-
-            // if(SHOULDER_JOINT_DRIVER->stallguard())
-            // {
-            //     stallDetected_T0 = true;
-            // }
-
-            // if(ELBOW_JOINT_DRIVER->stallguard())
-            // {
-            //     stallDetected_T0 = true;
-            // }
-
-            if(WRIST_SWIVEL_DRIVER->XTARGET())
+             // //Bad Request Handling
+            if(nextkp.getX() == 7 && nextkp.getY() == 7 && nextkp.getZ() == 7)
             {
-                stallDetected_T0 = true;
+                break; //If we get a bad kinematic request, we go back to top of loop and skip execution and await voice commands again
             }
+        
+            double SHOULDER_SWIVEL_ANGLE_TO_MOVE = currentkp.getAngle1() - nextkp.getAngle1();
+            double SHOULDER_JOINT_ANGLE_TO_MOVE = currentkp.getAngle2() - nextkp.getAngle2();
+            double ELBOW_JOINT_ANGLE_TO_MOVE = currentkp.getAngle3() - nextkp.getAngle3();
+            double WRIST_SWIVEL_ANGLE_TO_MOVE = currentkp.getAngle4() - nextkp.getAngle4();
+            double WRIST_JOINT_ANGLE_TO_MOVE = currentkp.getAngle5() - nextkp.getAngle5();
+            
+            int SHOULDER_SWIVEL_MICRO_STEPS, SHOULDER_JOINT_MICRO_STEPS, ELBOW_JOINT_MICRO_STEPS, WRIST_SWIVEL_MICRO_STEPS, WRIST_JOINT_MICRO_STEPS;
 
-            // if(WRIST_JOINT_DRIVER->XTARGET()) //There's no reason to check stall if were done
-            // {
-            //     stallDetected_T0 = true;
-            // }
+            int stepResolution = 16; 
+            
+            // SHOULDER_SWIVEL_ANGLE_TO_MOVE = 15;
+            // SHOULDER_JOINT_ANGLE_TO_MOVE = 0;
+            // ELBOW_JOINT_ANGLE_TO_MOVE = 0;
+            // WRIST_SWIVEL_ANGLE_TO_MOVE = 30;
+            // WRIST_JOINT_ANGLE_TO_MOVE = 15;
 
-            stallDetected_T0 = false;
 
-            if(stallDetected_T0)
+            //FIX ME AND MAKE SURE DIRECTIONS MATCH
+            if(SHOULDER_SWIVEL_ANGLE_TO_MOVE < 0)  //Checking if we need to change direction
+                SHOULDER_SWIVEL_DRIVER->shaft(false); //false being left, true being right
+            else
+                SHOULDER_SWIVEL_DRIVER->shaft(true);
+
+            if(SHOULDER_JOINT_ANGLE_TO_MOVE < 0)
             {
-                // printf("Stalled\n");
-                chan_out_word(c, STALLED_T0);
-                break;
-            }
+                SHOULDER_JOINT_DRIVER1->shaft(false); //false being left, true being right
+                SHOULDER_JOINT_DRIVER2->shaft(false); //false being left, true being right
+            }  //Checking if we need to change direction
             else
             {
-                chan_out_word(c, NOSTALL_T0);
+                SHOULDER_JOINT_DRIVER1->shaft(true);
+                SHOULDER_JOINT_DRIVER2->shaft(true);
             }
+                
+            if(ELBOW_JOINT_ANGLE_TO_MOVE < 0)  //Checking if we need to change direction
+                ELBOW_JOINT_DRIVER->shaft(false); //false being left, true being right
+            else
+                ELBOW_JOINT_DRIVER->shaft(true);
 
-            fromTile1 = chan_in_word(c);
+            if(WRIST_SWIVEL_ANGLE_TO_MOVE < 0)  //Checking if we need to change direction
+                WRIST_SWIVEL_DRIVER->shaft(false); //false being left, true being right
+            else
+                WRIST_SWIVEL_DRIVER->shaft(true);
 
-            std::cout << "On tile 0, received from tile 1 "<<std::hex << fromTile1 << std::endl;
+            if(WRIST_JOINT_ANGLE_TO_MOVE < 0)  //Checking if we need to change direction
+                WRIST_JOINT_DRIVER->shaft(false); //false being left, true being right
+            else
+                WRIST_JOINT_DRIVER->shaft(true);
 
-            if(fromTile1 == DONE_STATUS_T0)
-            {   
-                // printf("All waves finished\n");
-                break;
-            }
-            
-        }
+            std::cout << ELBOW_JOINT_ANGLE_TO_MOVE << std::endl;
 
-        // if(stallDetected_T0) //If we stalled, handle it
-        // {
-        //     //TO BE DECIDED
-        // }
-        // else
-        // {
-        //     //GO BACK TO VOICE COMMANDS
-        //     return;
+            //MICRO ONLY
+            SHOULDER_SWIVEL_MICRO_STEPS = calculateMicroSteps(abs(SHOULDER_SWIVEL_ANGLE_TO_MOVE), SHOULDER_SWIVEL_ANGLE_TO_STEP_COEFFICIENT, stepResolution);
+            SHOULDER_JOINT_MICRO_STEPS = calculateMicroSteps(abs(SHOULDER_JOINT_ANGLE_TO_MOVE), SHOULDER_JOINT_ANGLE_TO_STEP_COEFFICIENT, stepResolution);
+            ELBOW_JOINT_MICRO_STEPS = calculateMicroSteps(abs(ELBOW_JOINT_ANGLE_TO_MOVE), ELBOW_JOINT_ANGLE_TO_STEP_COEFFICIENT, stepResolution);
+            // WRIST_SWIVEL_MICRO_STEPS = calculateMicroSteps(abs(WRIST_SWIVEL_ANGLE_TO_MOVE), WRIST_SWIVEL_ANGLE_TO_STEP_COEFFICIENT, stepResolution);
+            // WRIST_JOINT_MICRO_STEPS = calculateMicroSteps(abs(WRIST_JOINT_ANGLE_TO_MOVE), WRIST_JOINT_ANGLE_TO_STEP_COEFFICIENT, stepResolution);
 
-        // }
+            // std::cout << "ELBOW JOINT Full " << ELBOW_JOINT_MICRO_STEPS << std::endl;
+            // std::cout << "Shoulder Swivel Full " << SHOULDER_SWIVEL_MICRO_STEPS << std::endl;
 
-        return;
+            std::cout << "Beginning Full Steps" << std::endl;
 
-    }
+            std::cout << ELBOW_JOINT_MICRO_STEPS << std::endl;
+
+
+            // chan_out_word(c, SHOULDER_SWIVEL_FULL_STEPS);
+            // chan_out_word(c, SHOULDER_JOINT_FULL_STEPS);
+            // chan_out_word(c, ELBOW_JOINT_FULL_STEPS);
+            // chan_out_word(c, WRIST_SWIVEL_FULL_STEPS);
+            // chan_out_word(c, WRIST_JOINT_FULL_STEPS);
+
+            chan_out_word(c, SHOULDER_SWIVEL_MICRO_STEPS);
+            chan_out_word(c, SHOULDER_JOINT_MICRO_STEPS);
+
+            // chan_out_word(c, ELBOW_JOINT_MICRO_STEPS);
+            // chan_out_word(c, WRIST_SWIVEL_MICRO_STEPS);
+            // chan_out_word(c, WRIST_JOINT_MICRO_STEPS);
+
+            int fromTile1;
+
+            // delay_microseconds_cpp(100000); //Wait a moment for steps to get started or the stall will get detected immediately
+
+            while(1)
+            {       
+
+                // std::cout << "sg_result " << SHOULDER_SWIVEL_DRIVER->sg_result() << std::endl;
+                // std::cout << "stall flag " << SHOULDER_SWIVEL_DRIVER->stallguard() << std::endl;
+
+                // if(SHOULDER_SWIVEL_DRIVER->stallguard())
+                // {
+                //     stallDetected_T0 = true;
+                // } 
+
+                std::cout << SHOULDER_SWIVEL_DRIVER->DRV_STATUS() << std::endl;
+
+                // if(SHOULDER_JOINT_DRIVER->stallguard())
+                // {
+                //     stallDetected_T0 = true;
+                // }
+
+                // if(ELBOW_JOINT_DRIVER->stallguard())
+                // {
+                //     stallDetected_T0 = true;
+                // }
+
+                if(WRIST_SWIVEL_DRIVER->XTARGET())
+                {
+                    stallDetected_T0 = true;
+                }
+
+                // if(WRIST_JOINT_DRIVER->XTARGET()) //There's no reason to check stall if were done
+                // {
+                //     stallDetected_T0 = true;
+                // }
+
+                stallDetected_T0 = false;
+
+                if(stallDetected_T0)
+                {
+                    // printf("Stalled\n");
+                    chan_out_word(c, STALLED_T0);
+                    break;
+                }
+                else
+                {
+                    chan_out_word(c, NOSTALL_T0);
+                }
+
+                fromTile1 = chan_in_word(c);
+
+                std::cout << "On tile 0, received from tile 1 "<<std::hex << fromTile1 << std::endl;
+
+                if(fromTile1 == DONE_STATUS_T0)
+                {   
+                    // printf("All waves finished\n");
+                    break;
+                }
+                
+            } //Step Generation loop
+
+        } //Point by point for loop
+
+    }// Infinite loop for everything after setup
 
 }
