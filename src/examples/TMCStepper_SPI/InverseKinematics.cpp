@@ -266,6 +266,12 @@ double findSimpleShoulderAngle(double x, double y)
 
 KinematicPoint getSimpleKinematics(double desiredx, double desiredy, double desiredz)
 {
+
+    if(desiredx == 0 && desiredy == 0 and desiredz == 0) //Go home point
+    {
+        return KinematicPoint(0, 0, 0, 0, 0, 0, 0, 0.811624);
+    }
+
     double S1angle = findSimpleShoulderAngle(desiredx, desiredy);
     double S3angle = 0;
 
@@ -319,7 +325,7 @@ KinematicPoint getSimpleKinematics(double desiredx, double desiredy, double desi
         double J1angle = 90 - q1; // J1 = 0
         double J2angle = -1 *q2;
 
-        std::cout << "J1 " << J1angle << " J2 " << J2angle << std::endl;
+        // std::cout << "J1 " << J1angle << " J2 " << J2angle << std::endl;
 
         if(J1angle < minJ1angle || J1angle > maxJ1angle || J2angle < minJ2angle || J2angle > maxJ2angle)
         {
@@ -328,11 +334,13 @@ KinematicPoint getSimpleKinematics(double desiredx, double desiredy, double desi
 
     
         double x, y, z;
-        for(double J3 = 0; J3 <= maxJ3angle - 5; J3+= 0.1)
+        for(double J3 = -90; J3 <= maxJ3angle - 5; J3+= 0.5)
         {
             x = xPosition(S1angle, J1angle, J2angle, J3, S3angle);
             y = yPosition(S1angle, J1angle, J2angle, J3, S3angle);
             z = zPosition(S1angle, J1angle, J2angle, J3, S3angle);
+
+
 
             if( (std::abs(x - desiredx) <= tolerance) && 
                 (std::abs(y - desiredy) <= tolerance) &&
@@ -346,7 +354,7 @@ KinematicPoint getSimpleKinematics(double desiredx, double desiredy, double desi
 
     }
 
-    std::cout << "minangle " << minangle << std::endl;
+    // std::cout << "minangle " << minangle << std::endl;
 
     return KinematicPoint(7, 7, 7, 7, 7, 7, 7, 7); //No possible solution found
 

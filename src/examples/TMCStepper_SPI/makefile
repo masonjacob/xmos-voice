@@ -22,10 +22,10 @@
 # 	xcc -w -std=c++11 main.cpp TMCStepper.o -O2 -target=XU316-1024-QF60A-C24 -o main.xe
 
 spi.o:
-	xcc spi_master.c -c -O2 OSPREY-BOARD.xn -w -o spi.o
+	xcc spi_master.c -c -O2 XK_VOICE_L71.xn -w -o spi.o
 
 main.xe: spi.o
-	xcc -w -std=c++11 multitile.xc spi.o *.cpp OSPREY-BOARD.xn -O2 -o main.xe
+	xcc -w -std=c++11 multitile.xc spi.o *.cpp XK_VOICE_L71.xn -O2 -o main.xe
 
 #TMCStepper.o: spi.o TMCStepper.h TMC_MACROS.h TMC2130_bitfields.h TMC2160_bitfields.h TMC5130_bitfields.h TMC5160_bitfields.h
 #	xcc -g -w -std=c++14 -c CHOPCONF.cpp COOLCONF.cpp DRV_CONF.cpp DRV_STATUS.cpp DRVCONF.cpp DRVCTRL.cpp DRVSTATUS.cpp ENCMODE.cpp GCONF.cpp IHOLD_IRUN.cpp PWMCONF.cpp RAMP_STAT.cpp SGCSCONF.cpp SHORT_CONF.cpp SMARTEN.cpp TMCStepper.cpp TMC2130Stepper.cpp TMC2160Stepper.cpp TMC5130Stepper.cpp TMC5160Stepper.cpp SW_MODE.cpp spi.o -O2 -target=XU316-1024-QF60A-C24 -o TMCStepper.o

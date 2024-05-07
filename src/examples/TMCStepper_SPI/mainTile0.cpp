@@ -104,7 +104,7 @@ int calculateMicroSteps(double desiredAngle, double stepAngle, int stepResolutio
     // Calculate precise microsteps needed
     double preciseMicrosteps = desiredAngle / anglePerMicrostep;
 
-    std::cout << preciseMicrosteps << std::endl;
+    // std::cout << preciseMicrosteps << std::endl;
     
     // Round microsteps to nearest whole number
     return static_cast<int>(std::round(preciseMicrosteps));
@@ -120,49 +120,70 @@ public:
     Point(double x, double y, double z) : x(x), y(y), z(z) {}
 };
 
+class AngleSet {
+public:
+    double S1, J1, J2, S3, J3;
+
+    AngleSet(double S1, double J1, double J2, double S3, double J3) : S1(S1), J1(J1), J2(J2), S3(S3), J3(J3) {}
+};
+
 extern "C" //SPI and Kinematics
 void main_tile0(chanend_t c)
 {
-    port_t p_mosi = XS1_PORT_1L; //X0D35 pin 8 osprey
-    port_t p_miso  = XS1_PORT_1M; //X0D36 pin 7
-    port_t p_sclk = XS1_PORT_1N; //X0D37 pin 6
+    port_t p_mosi = XS1_PORT_1A; //PCB
+    port_t p_miso  = XS1_PORT_1D; //
+    port_t p_sclk = XS1_PORT_1L; //
+    port_t p_cs = XS1_PORT_8D;
 
     xclock_t cb = XS1_CLKBLK_1;
-    port_t led = XS1_PORT_4F;
+    // port_t led = XS1_PORT_4F;
 
 
-    //Setup all the drivers and SPI contexts
-    port_t DUMMYFORTESTING = XS1_PORT_1B;
+    // //Setup all the drivers and SPI contexts
+    // port_t DUMMYFORTESTING = XS1_PORT_1B;
 
-    spi_master_t SHOULDER_SWIVEL_SPI_CTX, SHOULDER_JOINT_SPI_CTX1, SHOULDER_JOINT_SPI_CTX2, ELBOW_JOINT_SPI_CTX, WRIST_SWIVEL_SPI_CTX, WRIST_JOINT_SPI_CTX;
+    // spi_master_t SHOULDER_SWIVEL_SPI_CTX, SHOULDER_JOINT_SPI_CTX1, SHOULDER_JOINT_SPI_CTX2, ELBOW_JOINT_SPI_CTX, WRIST_SWIVEL_SPI_CTX, WRIST_JOINT_SPI_CTX;
 
-    // port_t SHOULDER_SWIVEL_CS = XS1_PORT_1N; //X0D37 I2C_SCL, pin 5 on expansion header
-    port_t SHOULDER_SWIVEL_CS = XS1_PORT_1O; //Osprey X0D38 pin 5
-    spi_master_init(&SHOULDER_SWIVEL_SPI_CTX, cb, SHOULDER_SWIVEL_CS, p_sclk, p_mosi, p_miso);
+    // // port_t SHOULDER_SWIVEL_CS = XS1_PORT_1N; //X0D37 I2C_SCL, pin 5 on expansion header
+    // port_t SHOULDER_SWIVEL_CS = XS1_PORT_1O; //Osprey X0D38 pin 5
+    // spi_master_init(&SHOULDER_SWIVEL_SPI_CTX, cb, SHOULDER_SWIVEL_CS, p_sclk, p_mosi, p_miso);
 
-    port_t SHOULDER_JOINT_CS1 = XS1_PORT_1P; //pin 3
-    spi_master_init(&SHOULDER_JOINT_SPI_CTX1, cb, SHOULDER_JOINT_CS1, p_sclk, p_mosi, p_miso);
+    // port_t SHOULDER_JOINT_CS1 = XS1_PORT_1P; //pin 3
+    // spi_master_init(&SHOULDER_JOINT_SPI_CTX1, cb, SHOULDER_JOINT_CS1, p_sclk, p_mosi, p_miso);
     
-    port_t SHOULDER_JOINT_CS2 = XS1_PORT_1A; //PIN 12
-    spi_master_init(&SHOULDER_JOINT_SPI_CTX2, cb, SHOULDER_JOINT_CS2, p_sclk, p_mosi, p_miso);
+    // port_t SHOULDER_JOINT_CS2 = XS1_PORT_1A; //PIN 12
+    // spi_master_init(&SHOULDER_JOINT_SPI_CTX2, cb, SHOULDER_JOINT_CS2, p_sclk, p_mosi, p_miso);
 
-    //Normal CS, Driver 1
-    port_t ELBOW_JOINT_CS = DUMMYFORTESTING;
-    spi_master_init(&ELBOW_JOINT_SPI_CTX, cb, ELBOW_JOINT_CS, p_sclk, p_mosi, p_miso);
+    // //Normal CS, Driver 1
+    // port_t ELBOW_JOINT_CS = DUMMYFORTESTING;
+    // spi_master_init(&ELBOW_JOINT_SPI_CTX, cb, ELBOW_JOINT_CS, p_sclk, p_mosi, p_miso);
 
-    //2nd driver CS
-    // port_t WRIST_SWIVEL_CS = XS1_PORT_1O; //X0D38, I2C_SDA, pin 3 on expansion header
-    port_t WRIST_SWIVEL_CS = DUMMYFORTESTING; 
-    spi_master_init(&WRIST_SWIVEL_SPI_CTX, cb, WRIST_SWIVEL_CS, p_sclk, p_mosi, p_miso); //WRIST SWIVEL is using normal CS on header
+    // //2nd driver CS
+    // // port_t WRIST_SWIVEL_CS = XS1_PORT_1O; //X0D38, I2C_SDA, pin 3 on expansion header
+    // port_t WRIST_SWIVEL_CS = DUMMYFORTESTING; 
+    // spi_master_init(&WRIST_SWIVEL_SPI_CTX, cb, WRIST_SWIVEL_CS, p_sclk, p_mosi, p_miso); //WRIST SWIVEL is using normal CS on header
 
-    // port_t WRIST_JOINT_CS = XS1_PORT_1N; //X0D37 I2C_SCL, pin 5 on expansion header
-    port_t WRIST_JOINT_CS = DUMMYFORTESTING;
-    //3rd driver CS
-    spi_master_init(&WRIST_JOINT_SPI_CTX, cb, WRIST_JOINT_CS, p_sclk, p_mosi, p_miso);
+    // // port_t WRIST_JOINT_CS = XS1_PORT_1N; //X0D37 I2C_SCL, pin 5 on expansion header
+    // port_t WRIST_JOINT_CS = DUMMYFORTESTING;
+    // //3rd driver CS
+    // spi_master_init(&WRIST_JOINT_SPI_CTX, cb, WRIST_JOINT_CS, p_sclk, p_mosi, p_miso);
 
     spi_master_device_t spi_device_SHOULDER_SWIVEL, spi_device_SHOULDER_JOINT1, spi_device_SHOULDER_JOINT2, spi_device_ELBOW_JOINT, spi_device_WRIST_SWIVEL, spi_device_WRIST_JOINT;
 
-    TMC5160Stepper* SHOULDER_SWIVEL_DRIVER = new TMC5160Stepper(Rsense, &spi_device_SHOULDER_SWIVEL, &SHOULDER_SWIVEL_SPI_CTX,
+
+    spi_master_t SPI_CTX;
+    spi_master_init(&SPI_CTX, cb, p_cs, p_sclk, p_mosi, p_miso);
+
+    TMC5160Stepper* SHOULDER_SWIVEL_DRIVER = new TMC5160Stepper(Rsense, &spi_device_SHOULDER_SWIVEL, &SPI_CTX,
+        2, //Chip Select bit number
+        1, 1,  //cpol, cpha
+        spi_master_source_clock_xcore,
+        150, //Was 75 600Mhz/(4 * 75) = 2MHz
+        spi_master_sample_delay_0,
+        0, 0 ,0 ,0);
+
+    //Clockwise is positive
+    TMC5160Stepper* SHOULDER_JOINT_DRIVER1 = new TMC5160Stepper(Rsense, &spi_device_SHOULDER_JOINT1, &SPI_CTX,
         0, //Chip Select bit number
         1, 1,  //cpol, cpha
         spi_master_source_clock_xcore,
@@ -170,43 +191,35 @@ void main_tile0(chanend_t c)
         spi_master_sample_delay_0,
         0, 0 ,0 ,0);
 
-    TMC5160Stepper* SHOULDER_JOINT_DRIVER1 = new TMC5160Stepper(Rsense, &spi_device_SHOULDER_JOINT1, &SHOULDER_JOINT_SPI_CTX1,
-        0, //Chip Select bit number
+    TMC5160Stepper* SHOULDER_JOINT_DRIVER2 = new TMC5160Stepper(Rsense, &spi_device_SHOULDER_JOINT2, &SPI_CTX,
+        1, //Chip Select bit number
         1, 1,  //cpol, cpha
         spi_master_source_clock_xcore,
         150, //Was 75 600Mhz/(4 * 75) = 2MHz
         spi_master_sample_delay_0,
         0, 0 ,0 ,0);
 
-    TMC5160Stepper* SHOULDER_JOINT_DRIVER2 = new TMC5160Stepper(Rsense, &spi_device_SHOULDER_JOINT2, &SHOULDER_JOINT_SPI_CTX2,
-        0, //Chip Select bit number
+    TMC5160Stepper* ELBOW_JOINT_DRIVER = new TMC5160Stepper(Rsense, &spi_device_ELBOW_JOINT, &SPI_CTX,
+        3, //Chip Select bit number
         1, 1,  //cpol, cpha
         spi_master_source_clock_xcore,
         150, //Was 75 600Mhz/(4 * 75) = 2MHz
         spi_master_sample_delay_0,
         0, 0 ,0 ,0);
 
-    TMC5160Stepper* ELBOW_JOINT_DRIVER = new TMC5160Stepper(Rsense, &spi_device_ELBOW_JOINT, &ELBOW_JOINT_SPI_CTX,
-        0, //Chip Select bit number
+    TMC5160Stepper* WRIST_SWIVEL_DRIVER = new TMC5160Stepper(Rsense, &spi_device_WRIST_SWIVEL, &SPI_CTX,
+        4, //Chip Select bit number
         1, 1,  //cpol, cpha
         spi_master_source_clock_xcore,
-        75, //Was 75 600Mhz/(4 * 75) = 2MHz
+        150, //Was 75 600Mhz/(4 * 75) = 2MHz
         spi_master_sample_delay_0,
         0, 0 ,0 ,0);
 
-    TMC5160Stepper* WRIST_SWIVEL_DRIVER = new TMC5160Stepper(Rsense, &spi_device_WRIST_SWIVEL, &WRIST_SWIVEL_SPI_CTX,
-        0, //Chip Select bit number
+    TMC5160Stepper* WRIST_JOINT_DRIVER = new TMC5160Stepper(Rsense, &spi_device_WRIST_JOINT, &SPI_CTX,
+        5, //Chip Select bit number
         1, 1,  //cpol, cpha
         spi_master_source_clock_xcore,
-        75, //Was 75 600Mhz/(4 * 75) = 2MHz
-        spi_master_sample_delay_0,
-        0, 0 ,0 ,0);
-
-    TMC5160Stepper* WRIST_JOINT_DRIVER = new TMC5160Stepper(Rsense, &spi_device_WRIST_JOINT, &WRIST_JOINT_SPI_CTX,
-        0, //Chip Select bit number
-        1, 1,  //cpol, cpha
-        spi_master_source_clock_xcore,
-        75, //Was 75 600Mhz/(4 * 75) = 2MHz
+        150, //Was 75 600Mhz/(4 * 75) = 2MHz
         spi_master_sample_delay_0,
         0, 0 ,0 ,0);
 
@@ -216,76 +229,118 @@ void main_tile0(chanend_t c)
     setup_driver(ELBOW_JOINT_DRIVER, ELBOW_JOINT_CURRENT); 
     setup_driver(WRIST_SWIVEL_DRIVER, WRIST_SWIVEL_CURRENT);
     setup_driver(WRIST_JOINT_DRIVER, WRIST_JOINT_CURRENT);
-    
-    // double elbow[] = {0, 45, 50, 45, 0 };
-    // double wristSwiv[] = {0, 90, 0, -90, 0};
-    // double wristJoint[] = {0, 45, 50, 45, 0};
-
-    int posInArray = 0;
 
     double SHOULDER_SWIVEL_ANGLE_TO_MOVE, SHOULDER_JOINT_ANGLE_TO_MOVE, ELBOW_JOINT_ANGLE_TO_MOVE, WRIST_SWIVEL_ANGLE_TO_MOVE, WRIST_JOINT_ANGLE_TO_MOVE;
 
-    // port_t p_bit3 = XS1_PORT_1D;
-    // port_t p_bit2 = XS1_PORT_1D;
-    // port_t p_bit1 = XS1_PORT_1D;
-    // port_t p_bit0 = XS1_PORT_1D;
-    // port_enable(p_bit3);
-    // port_enable(p_bit2);
-    // port_enable(p_bit1);
-    // port_enable(p_bit0);
+    // port_t GPIObot2 = XS1_PORT_8C;
+    // port_t GPIOtop2 = XS1_PORT_8D;
+    // port_enable(GPIObot2);
+    // port_enable(GPIOtop2);
 
-    int bit3, bit2, bit1, bit0;
+    port_t top3 = XS1_PORT_4F;
+    port_t bot1 = XS1_PORT_4E; 
+    port_enable(top3);
+    port_enable(bot1);
+
+    int bit3, bit2, bit1, bit0, bit32;
     int word_id_from_voice;
 
-    #define ASR_NUMBER_OF_COMMANDS  (17)
+    #define ASR_NUMBER_OF_COMMANDS  (16)
 
         typedef struct asr_lut_struct
     {
         int     asr_id;    // ASR response IDs
         const char* text;  // String output
-        Point points[5];
+        std::vector<Point> points; //For Kinematic Commands
+        std::vector<AngleSet> angleSet; //For only angle commands
+        
     } asr_lut_t;
 
         static asr_lut_t asr_lut[ASR_NUMBER_OF_COMMANDS] = {
-        {1, "Switch on the TV", {{1.0, 1.0, 1.0}}},
-        {2, "Channel up", {{0.0, 0.0, 0.0}}},  // Example values, adjust accordingly
-        {3, "Channel down", {{0.0, 0.0, 0.0}}},
-        {4, "Volume up", {{0.0, 0.0, 0.0}}},
-        {5, "Volume down", {{0.0, 0.0, 0.0}}},
-        {6, "Switch off the TV", {{0.0, 0.0, 0.0}}},
-        {7, "Switch on the lights", {{0.0, 0.0, 0.0}}},
-        {8, "Brightness up", {{0.0, 0.0, 0.0}}},
-        {9, "Brightness down", {{0.0, 0.0, 0.0}}},
-        {10, "Switch off the lights", {{0.0, 0.0, 0.0}}},
-        {11, "Switch on the fan", {{0.0, 0.0, 0.0}}},
-        {12, "Speed up the fan", {{0.0, 0.0, 0.0}}},
-        {13, "Slow down the fan", {{0.0, 0.0, 0.0}}},
-        {14, "Set higher temperature", {{0.0, 0.0, 0.0}}},
-        {15, "Set lower temperature", {{0.0, 0.0, 0.0}}},
-        {16, "Switch off the fan", {{0.0, 0.0, 0.0}}},
-        {17, "Hello XMOS", {{0.0, 0.0, 0.0}}}
+        {1, "Do you believe in the afterlife?", {}, 
+        {{{0}, {0}, {0}, {45}, {70}}, {{0}, {0}, {0}, {-45}, {70}}, {{0}, {0}, {0}, {45}, {70}}, {{0}, {0}, {0}, {-45}, {70}}, {{0}, {0}, {0}, {0}, {0}}} //Angle set
+        }, //Answers no
+
+        {2, "Do you like Mason more than Derek?", {},
+        // {{{0}, {0}, {0}, {45}, {70}}, {{0}, {0}, {0}, {-45}, {70}}, {{0}, {0}, {0}, {45}, {70}}, {{0}, {0}, {0}, {-45}, {70}}, {{0}, {0}, {0}, {0}, {0}}} //Angle set
+        {{{0}, {0}, {15}, {0}, {0}}, {{0}, {0}, {0}, {0}, {0}}}
+        },
+
+        {3, "Do you want to get out of here?", {},
+        {{{0}, {0}, {0}, {0}, {70}}, {{0}, {0}, {0}, {0}, {0}}, {{0}, {0}, {0}, {0}, {70}}, {{0}, {0}, {0}, {0}, {0}}}
+         //Angle set
+        }, //Answers Yes
+        {4, "Is capstone the best program ever?", {},
+        {{{0}, {0}, {0}, {0}, {70}}, {{0}, {0}, {0}, {0}, {0}}, {{0}, {0}, {0}, {0}, {70}}, {{0}, {0}, {0}, {0}, {0}}}
+
+        },
+        {5, "Do you believe in life after love?", {},
+        {{{0}, {0}, {0}, {0}, {70}}, {{0}, {0}, {0}, {0}, {0}}, {{0}, {0}, {0}, {0}, {70}}, {{0}, {0}, {0}, {0}, {0}}}
+
+        },
+        {6, "Does it hurt when we turn you off?", {},
+        {{{0}, {0}, {0}, {0}, {70}}, {{0}, {0}, {0}, {0}, {0}}, {{0}, {0}, {0}, {0}, {70}}, {{0}, {0}, {0}, {0}, {0}}}
+
+        },
+        {7, "Is this on?", {}, 
+        {{{0}, {0}, {0}, {0}, {70}}, {{0}, {0}, {0}, {0}, {0}}, {{0}, {0}, {0}, {0}, {70}}, {{0}, {0}, {0}, {0}, {0}}}
+        },
+        {8, "You dont need no man!", {},
+        {{{30}, {30}, {-15}, {0}, {-30}}, {{-30}, {45}, {-15}, {0}, {-30}}, {{30}, {60}, {-15}, {0}, {-30}}, {{0}, {0}, {0}, {0}, {0}}}
+        },
+        {9, "Goodbye xbot!", {},
+        {{{0}, {0}, {45}, {45}, {-45}}, {{0}, {0}, {45}, {-45}, {-45}}, {{0}, {0}, {45}, {45}, {-45}}, {{0}, {0}, {45}, {-45}, {-45}}, {{0}, {0}, {0}, {0}, {0}}}
+
+        },
+        {10, "Farewell my dear xbot!", {},
+        {{{45}, {65}, {-30}, {0}, {45}}, {{45}, {65}, {-30}, {45}, {45}}, {{45}, {65}, {-30}, {-45}, {45}}, {{-45}, {65}, {-30}, {0}, {45}}, {{-45}, {65}, {-30}, {45}, {45}}, {{-45}, {65}, {-30}, {-45}, {45}}, {{0}, {0}, {0}, {0}, {0}}}
+
+        },
+        {11, "Sign your name", {{0.0762, -0.254, 0.124}, {-0.0254, -0.254, 0.124}, {0.0508, -1.778, 0.124}, {0.0254, -0.2794, 0.124}, {0, -0.1778, 0.124}, {0, 0, 0},},
+        {}},
+
+        {12, "What am I?", {{0.0, 0.0, 0.0}}},
+        {13, "What grade do we deserve for this project?", {{0.0, 0.0, 0.0}}},
+        {14, "Where do gingers go?", {},
+        {{{0}, {75}, {45}, {0}, {75}}, {{0}, {70}, {45}, {0}, {75}}, {{0}, {75}, {45}, {0}, {75}}, {{0}, {70}, {45}, {0}, {75}}, {0, 0, 0, 0, 0}}
+        },
+
+        {15, "Where do all puppies go?", {{0.0, 0.0, 0.0}}},
+        {16, "Hey xbot!", {{0.0, 0.0, 0.0}}}
     };
 
     //Starts in upright position. 0.811 is the the highest it can reach.
 
     KinematicPoint currentkp = KinematicPoint(0, 0, 0, 0, 0, 0, 0, 0.811624);
+    AngleSet currentAS = {0, 0, 0, 0, 0};
+
+    // port_t test = XS1_PORT_1N;
+    // port_enable(test);
+    // port_out(test, 0);
 
     while(1) //Voice Control, Kinematics, Stall checks
     {
 
-        Point* points = nullptr;
+        std::vector<Point> points;
+        std::vector<AngleSet> angleset;
+
+        bool ifKinematic = false;
 
         //Wait for voice command
         while(1)
         {
-            bit3 = port_in(p_bit3);
-            bit2 = port_in(p_bit2);
-            bit1 = port_in(p_bit1);
-            bit0 = port_in(p_bit0);
 
-            word_id_from_voice = (bit3 << 3) | (bit2 << 2) | (bit1 << 1) | (bit0);
+            // bit32 = (port_in(GPIOtop2) >> 4) & 0xC;
+            // bit0 = (port_in(GPIObot2) >> 6) & 0x1;
+            // bit1 = (port_in(GPIObot2) >> 2) & 0x2;
+            // word_id_from_voice = bit32 | bit1 | bit0;
 
-            if(word_id_from_voice != 0)
+            word_id_from_voice = (port_in(top3) & 0xE) | ((port_in(bot1) >> 2) & 0x1);
+
+            // std::cout << word_id_from_voice << std::endl;
+
+            
+            if(word_id_from_voice != 0 && word_id_from_voice != 1)
             {
                 const char* text = "";
 
@@ -294,44 +349,82 @@ void main_tile0(chanend_t c)
                     if (asr_lut[i].asr_id == word_id_from_voice) 
                     {
                         text = asr_lut[i].text;
+
+                        // std::cout << text << std::endl;
+
                         points = asr_lut[i].points;
+                        angleset = asr_lut[i].angleSet;
+
+                        if(points.size() > 0)
+                        {
+                            ifKinematic = true;
+                        }
+                        else
+                        {
+                            ifKinematic = false;
+                        }
+                        
                     }
                 }
-
+                // std::cout << "Voice command found" << std::endl;
                 break; //Start kinematics with defined points array
             }
 
             delay_milliseconds(100);
         }
 
+        int loopmax;
 
-
-        for (int j = 0; j < 5; j++) 
+        if(ifKinematic)
         {
-            KinematicPoint nextkp = getSimpleKinematics(points[j].x, points[j].y, points[j].z);
+            loopmax = points.size();
+        }
+        else
+        {
+            loopmax = angleset.size();
+        }
 
-             // //Bad Request Handling
-            if(nextkp.getX() == 7 && nextkp.getY() == 7 && nextkp.getZ() == 7)
+        double SHOULDER_SWIVEL_ANGLE_TO_MOVE,SHOULDER_JOINT_ANGLE_TO_MOVE, ELBOW_JOINT_ANGLE_TO_MOVE,WRIST_SWIVEL_ANGLE_TO_MOVE,WRIST_JOINT_ANGLE_TO_MOVE;
+
+        AngleSet nextAS = {0, 0, 0, 0, 0};
+        KinematicPoint nextkp;
+
+        // int loopmax = 1;
+
+        for (int j = 0; j < loopmax; j++) 
+        {
+            if(ifKinematic)
             {
-                break; //If we get a bad kinematic request, we go back to top of loop and skip execution and await voice commands again
+                nextkp = getSimpleKinematics(points[j].x, points[j].y, points[j].z);
+
+                // //Bad Request Handling
+                if(nextkp.getX() == 7 && nextkp.getY() == 7 && nextkp.getZ() == 7)
+                {
+                    std::cout << "Bad Request" << std::endl;
+                    break; //If we get a bad kinematic request, we go back to top of loop and skip execution and await voice commands again
+                }
+            
+                SHOULDER_SWIVEL_ANGLE_TO_MOVE = nextkp.getAngle1() - currentkp.getAngle1();
+                SHOULDER_JOINT_ANGLE_TO_MOVE = nextkp.getAngle2() - currentkp.getAngle2();
+                ELBOW_JOINT_ANGLE_TO_MOVE = nextkp.getAngle3() - currentkp.getAngle3();
+                WRIST_SWIVEL_ANGLE_TO_MOVE = nextkp.getAngle5() - currentkp.getAngle5();
+                WRIST_JOINT_ANGLE_TO_MOVE = nextkp.getAngle4() - currentkp.getAngle4();
             }
-        
-            double SHOULDER_SWIVEL_ANGLE_TO_MOVE = currentkp.getAngle1() - nextkp.getAngle1();
-            double SHOULDER_JOINT_ANGLE_TO_MOVE = currentkp.getAngle2() - nextkp.getAngle2();
-            double ELBOW_JOINT_ANGLE_TO_MOVE = currentkp.getAngle3() - nextkp.getAngle3();
-            double WRIST_SWIVEL_ANGLE_TO_MOVE = currentkp.getAngle4() - nextkp.getAngle4();
-            double WRIST_JOINT_ANGLE_TO_MOVE = currentkp.getAngle5() - nextkp.getAngle5();
-            
-            int SHOULDER_SWIVEL_MICRO_STEPS, SHOULDER_JOINT_MICRO_STEPS, ELBOW_JOINT_MICRO_STEPS, WRIST_SWIVEL_MICRO_STEPS, WRIST_JOINT_MICRO_STEPS;
+            else //Angle set
+            {
+                nextAS = angleset[j];
 
-            int stepResolution = 16; 
-            
-            // SHOULDER_SWIVEL_ANGLE_TO_MOVE = 15;
-            // SHOULDER_JOINT_ANGLE_TO_MOVE = 0;
-            // ELBOW_JOINT_ANGLE_TO_MOVE = 0;
-            // WRIST_SWIVEL_ANGLE_TO_MOVE = 30;
-            // WRIST_JOINT_ANGLE_TO_MOVE = 15;
+                SHOULDER_SWIVEL_ANGLE_TO_MOVE = angleset[j].S1 - currentAS.S1;
+                SHOULDER_JOINT_ANGLE_TO_MOVE = angleset[j].J1 - currentAS.J1;
+                ELBOW_JOINT_ANGLE_TO_MOVE = angleset[j].J2 - currentAS.J2;
+                WRIST_SWIVEL_ANGLE_TO_MOVE = angleset[j].S3 - currentAS.S3;
+                WRIST_JOINT_ANGLE_TO_MOVE = angleset[j].J3 - currentAS.J3;
 
+                // std::cout << "WS" << WRIST_SWIVEL_ANGLE_TO_MOVE << std::endl;
+                // std::cout << "WJ" << WRIST_JOINT_ANGLE_TO_MOVE << std::endl;
+            }
+
+            // SHOULDER_JOINT_ANGLE_TO_MOVE = 15;
 
             //FIX ME AND MAKE SURE DIRECTIONS MATCH
             if(SHOULDER_SWIVEL_ANGLE_TO_MOVE < 0)  //Checking if we need to change direction
@@ -342,16 +435,19 @@ void main_tile0(chanend_t c)
             if(SHOULDER_JOINT_ANGLE_TO_MOVE < 0)
             {
                 SHOULDER_JOINT_DRIVER1->shaft(false); //false being left, true being right
-                SHOULDER_JOINT_DRIVER2->shaft(false); //false being left, true being right
+                SHOULDER_JOINT_DRIVER2->shaft(true); //false being left, true being right
             }  //Checking if we need to change direction
             else
             {
                 SHOULDER_JOINT_DRIVER1->shaft(true);
-                SHOULDER_JOINT_DRIVER2->shaft(true);
+                SHOULDER_JOINT_DRIVER2->shaft(false);
             }
                 
-            if(ELBOW_JOINT_ANGLE_TO_MOVE < 0)  //Checking if we need to change direction
+            if(ELBOW_JOINT_ANGLE_TO_MOVE < 0) 
+            {
                 ELBOW_JOINT_DRIVER->shaft(false); //false being left, true being right
+                // std::cout << "Switched direction for elbow" << std::endl;
+            } //Checking if we need to change direction
             else
                 ELBOW_JOINT_DRIVER->shaft(true);
 
@@ -365,21 +461,35 @@ void main_tile0(chanend_t c)
             else
                 WRIST_JOINT_DRIVER->shaft(true);
 
-            std::cout << ELBOW_JOINT_ANGLE_TO_MOVE << std::endl;
+
+            int SHOULDER_SWIVEL_MICRO_STEPS, SHOULDER_JOINT_MICRO_STEPS, ELBOW_JOINT_MICRO_STEPS, WRIST_SWIVEL_MICRO_STEPS, WRIST_JOINT_MICRO_STEPS;    
+            int stepResolution = 16; 
+
+
+
+            // std::cout << "SS " << SHOULDER_SWIVEL_ANGLE_TO_MOVE << std::endl;
+            // std::cout << "SJ " << SHOULDER_JOINT_ANGLE_TO_MOVE << std::endl;
+            // std::cout << "ES " << ELBOW_JOINT_ANGLE_TO_MOVE << std::endl;
+            // std::cout << "WS " << WRIST_SWIVEL_ANGLE_TO_MOVE << std::endl;
+            // std::cout << "WJ " << WRIST_JOINT_ANGLE_TO_MOVE << std::endl;
+
+            // SHOULDER_SWIVEL_ANGLE_TO_MOVE = 0;
+            // SHOULDER_JOINT_ANGLE_TO_MOVE = 15;
+            // ELBOW_JOINT_ANGLE_TO_MOVE = 0;
+            // WRIST_SWIVEL_ANGLE_TO_MOVE = 0;
+            // WRIST_JOINT_ANGLE_TO_MOVE = 0;
 
             //MICRO ONLY
             SHOULDER_SWIVEL_MICRO_STEPS = calculateMicroSteps(abs(SHOULDER_SWIVEL_ANGLE_TO_MOVE), SHOULDER_SWIVEL_ANGLE_TO_STEP_COEFFICIENT, stepResolution);
             SHOULDER_JOINT_MICRO_STEPS = calculateMicroSteps(abs(SHOULDER_JOINT_ANGLE_TO_MOVE), SHOULDER_JOINT_ANGLE_TO_STEP_COEFFICIENT, stepResolution);
             ELBOW_JOINT_MICRO_STEPS = calculateMicroSteps(abs(ELBOW_JOINT_ANGLE_TO_MOVE), ELBOW_JOINT_ANGLE_TO_STEP_COEFFICIENT, stepResolution);
-            // WRIST_SWIVEL_MICRO_STEPS = calculateMicroSteps(abs(WRIST_SWIVEL_ANGLE_TO_MOVE), WRIST_SWIVEL_ANGLE_TO_STEP_COEFFICIENT, stepResolution);
-            // WRIST_JOINT_MICRO_STEPS = calculateMicroSteps(abs(WRIST_JOINT_ANGLE_TO_MOVE), WRIST_JOINT_ANGLE_TO_STEP_COEFFICIENT, stepResolution);
+            WRIST_SWIVEL_MICRO_STEPS = calculateMicroSteps(abs(WRIST_SWIVEL_ANGLE_TO_MOVE), WRIST_SWIVEL_ANGLE_TO_STEP_COEFFICIENT, stepResolution);
+            WRIST_JOINT_MICRO_STEPS = calculateMicroSteps(abs(WRIST_JOINT_ANGLE_TO_MOVE), WRIST_JOINT_ANGLE_TO_STEP_COEFFICIENT, stepResolution);
 
             // std::cout << "ELBOW JOINT Full " << ELBOW_JOINT_MICRO_STEPS << std::endl;
             // std::cout << "Shoulder Swivel Full " << SHOULDER_SWIVEL_MICRO_STEPS << std::endl;
 
-            std::cout << "Beginning Full Steps" << std::endl;
-
-            std::cout << ELBOW_JOINT_MICRO_STEPS << std::endl;
+            // std::cout << "Beginning Full Steps" << std::endl;
 
 
             // chan_out_word(c, SHOULDER_SWIVEL_FULL_STEPS);
@@ -390,16 +500,13 @@ void main_tile0(chanend_t c)
 
             chan_out_word(c, SHOULDER_SWIVEL_MICRO_STEPS);
             chan_out_word(c, SHOULDER_JOINT_MICRO_STEPS);
-
-            // chan_out_word(c, ELBOW_JOINT_MICRO_STEPS);
-            // chan_out_word(c, WRIST_SWIVEL_MICRO_STEPS);
-            // chan_out_word(c, WRIST_JOINT_MICRO_STEPS);
+            chan_out_word(c, ELBOW_JOINT_MICRO_STEPS);
+            chan_out_word(c, WRIST_SWIVEL_MICRO_STEPS);
+            chan_out_word(c, WRIST_JOINT_MICRO_STEPS);
 
             int fromTile1;
 
-            // delay_microseconds_cpp(100000); //Wait a moment for steps to get started or the stall will get detected immediately
-
-            while(1)
+            while(1) //Step Gen
             {       
 
                 // std::cout << "sg_result " << SHOULDER_SWIVEL_DRIVER->sg_result() << std::endl;
@@ -410,7 +517,7 @@ void main_tile0(chanend_t c)
                 //     stallDetected_T0 = true;
                 // } 
 
-                std::cout << SHOULDER_SWIVEL_DRIVER->DRV_STATUS() << std::endl;
+                // std::cout << SHOULDER_SWIVEL_DRIVER->DRV_STATUS() << std::endl;
 
                 // if(SHOULDER_JOINT_DRIVER->stallguard())
                 // {
@@ -447,18 +554,30 @@ void main_tile0(chanend_t c)
 
                 fromTile1 = chan_in_word(c);
 
-                std::cout << "On tile 0, received from tile 1 "<<std::hex << fromTile1 << std::endl;
+                // std::cout << "On tile 0, received from tile 1 "<<std::hex << fromTile1 << std::endl;
 
                 if(fromTile1 == DONE_STATUS_T0)
                 {   
                     // printf("All waves finished\n");
+                    // return;
+
                     break;
                 }
                 
             } //Step Generation loop
 
+            if(ifKinematic)
+            {
+                currentkp = nextkp; //We've moved to the new position. Update our currentkp with the nextkp
+
+            }
+            else
+            {
+                currentAS = nextAS;
+            }
+
         } //Point by point for loop
 
     }// Infinite loop for everything after setup
 
-}
+}//Main
